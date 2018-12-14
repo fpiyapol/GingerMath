@@ -39,6 +39,8 @@ public class Timer implements Runnable{
                 System.out.println(ex);
             }
         }
-        new TimeOut(parentFrame, parentFrame.getSize().width, (int)parentFrame.getSize().getHeight(), score).setVisible(true);
+        
+        TimeOutDialog to = new TimeOutDialog(parentFrame, true, score);
     }
+    
 }
