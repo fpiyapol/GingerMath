@@ -42,5 +42,4 @@ public class Timer implements Runnable{
         
         TimeOutDialog to = new TimeOutDialog(parentFrame, true, score);
     }
-    
 }
