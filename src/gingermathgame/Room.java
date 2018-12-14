@@ -6,12 +6,23 @@
 package gingermathgame;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
  * @author 60070052
  */
 public class Room extends javax.swing.JFrame {
+    
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
 
     /**
      * Creates new form Room
@@ -24,6 +35,47 @@ public class Room extends javax.swing.JFrame {
     public void setRoomName(String roomName){
         this.roomName.setText(roomName);
     }
+    
+    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
+        this.socket = socket;
+        this.in = in;
+        this.out = out;
+    }
+    
+    public void updateRoom(){
+//        try {
+//            out.println("ru " + roomName.getText());
+//            String players = in.readLine();
+//            DefaultListModel<String> allPlayersName = new DefaultListModel<>();
+//            for(String name:players.split("-")){
+//                allPlayersName.addElement(name);
+//            }
+//            playerList.setModel(allPlayersName);
+//        } catch (IOException ex) {
+//            System.out.println("Room update error : " + ex);
+//        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        out.println("ru " + roomName.getText());
+                        String players = in.readLine();
+                        DefaultListModel<String> allPlayersName = new DefaultListModel<>();
+                        for(String name:players.split("-")){
+                            allPlayersName.addElement(name);
+                        }
+                        playerList.setModel(allPlayersName);
+                        Thread.sleep(1000);
+                    } catch (Exception ex) {
+                        System.out.println("error : " + ex);
+                    }
+                }
+            }
+        }).start();
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,7 +88,7 @@ public class Room extends javax.swing.JFrame {
         gradientPanel1 = new gingermathgame.GradientPanel();
         roomName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        playerList = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -50,8 +102,8 @@ public class Room extends javax.swing.JFrame {
         roomName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         roomName.setText(" ROOM NAME ");
 
-        jList1.setFont(new java.awt.Font("Kanit", 0, 18)); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        playerList.setFont(new java.awt.Font("Kanit", 0, 18)); // NOI18N
+        jScrollPane1.setViewportView(playerList);
 
         jButton1.setText("START");
 
@@ -166,9 +218,9 @@ public class Room extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> playerList;
     private javax.swing.JLabel roomName;
     // End of variables declaration//GEN-END:variables
 }

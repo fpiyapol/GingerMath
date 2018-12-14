@@ -3,6 +3,8 @@ package gingermathgame;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -12,6 +14,8 @@ import java.net.Socket;
 public class MainMenu extends javax.swing.JFrame{
     
     private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
 
     /**
      * Creates new form MainMenu
@@ -29,9 +33,11 @@ public class MainMenu extends javax.swing.JFrame{
         buttonPanel.setBackground(new Color(0, 0, 0, 0));
     }
     
-    public void setSocket(Socket socket){
+    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
         System.out.println("Main menu set socket.");
         this.socket = socket;
+        this.in = in;
+        this.out = out;
     }
     
    
@@ -286,7 +292,7 @@ public class MainMenu extends javax.swing.JFrame{
 
     private void buttonMultiplayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMultiplayerActionPerformed
         Lobby lobby = new Lobby();
-        lobby.setSocket(socket);
+        lobby.setSocket(socket, in, out);
 //        lobby.setListRoom();
         setAlwaysOnTop(true);
         lobby.setSize(getSize());

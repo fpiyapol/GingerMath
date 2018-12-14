@@ -35,15 +35,11 @@ public class Lobby extends javax.swing.JFrame {
         rightPanel.setBackground(new Color(0, 0, 0, 0));            
         }
     
-    public void setSocket(Socket socket){
-        try {
+    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
             System.out.println("Lobby set socket");
             this.socket = socket;
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ex) {
-            System.out.println("Lobby error : " + ex);
-        }
+            this.in = in;
+            this.out = out;
     }
     
     public void setListRoom(){
@@ -80,7 +76,7 @@ public class Lobby extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         rightPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btJoin = new javax.swing.JButton();
         btCreate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btRefresh = new javax.swing.JButton();
@@ -104,10 +100,10 @@ public class Lobby extends javax.swing.JFrame {
 
         rightPanel.setBackground(new java.awt.Color(255, 204, 51));
 
-        jButton1.setText("JOIN ROOM");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btJoin.setText("JOIN ROOM");
+        btJoin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btJoinActionPerformed(evt);
             }
         });
 
@@ -134,7 +130,7 @@ public class Lobby extends javax.swing.JFrame {
             .addGroup(rightPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btJoin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -144,7 +140,7 @@ public class Lobby extends javax.swing.JFrame {
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(btJoin, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRefresh)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,9 +213,20 @@ public class Lobby extends javax.swing.JFrame {
         setListRoom();
     }//GEN-LAST:event_btRefreshActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJoinActionPerformed
+        String getRoomName = listOfRooms.getSelectedValue();
+        System.out.println(getRoomName);
+        out.println("jn " + getRoomName);
+        Room room = new Room();
+        room.setRoomName(getRoomName);
+        room.setSocket(socket, in, out);
+        room.updateRoom();
+        setAlwaysOnTop(true);
+        room.setSize(getSize());
+        room.setLocationRelativeTo(this);
+        room.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btJoinActionPerformed
 
     private void btCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateActionPerformed
         String createRoomName = (String)JOptionPane.showInputDialog(null, "Create room : ", "Create Room", JOptionPane.PLAIN_MESSAGE, null, null, "room_name");
@@ -227,6 +234,8 @@ public class Lobby extends javax.swing.JFrame {
         out.println("cr " + createRoomName);
         Room room = new Room();
         room.setRoomName(createRoomName);
+        room.setSocket(socket, in, out);
+        room.updateRoom();
         setAlwaysOnTop(true);
         room.setSize(getSize());
         room.setLocationRelativeTo(this);
@@ -271,13 +280,12 @@ public class Lobby extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCreate;
+    private javax.swing.JButton btJoin;
     private javax.swing.JButton btRefresh;
     private gingermathgame.GradientPanel gradientPanel1;
     private javax.swing.JPanel groupPanel1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
