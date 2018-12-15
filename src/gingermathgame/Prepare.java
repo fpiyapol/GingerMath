@@ -36,7 +36,7 @@ public class Prepare extends javax.swing.JFrame {
                     Thread.sleep(400);
                     dispose();
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(GameGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
             }
         });
