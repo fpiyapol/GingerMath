@@ -23,13 +23,42 @@ public class Room extends javax.swing.JFrame {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
-
     /**
      * Creates new form Room
      */
     public Room() {
         initComponents();
         jPanel1.setBackground(new Color(0, 0, 0, 0));
+        btStart.setEnabled(false);
+        btKick.setEnabled(false);
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        if(in != null){
+                            String datain = in.readLine();
+                            String[] dt = datain.split(" ");
+                            if(dt[0].equals("lp")){
+                                String players = dt[1];
+                                DefaultListModel<String> allPlayersName = new DefaultListModel<>();
+
+                                for(String name:players.split("-")){
+                                    allPlayersName.addElement(name);
+                                }
+                                playerList.setModel(allPlayersName);
+                            }else if(dt[0].equals("st")){
+                                System.out.println("let's play !!!!!!!!!!!!!!!!!!!!!!!!");
+                            }
+                                
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(Room.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
     }
     
     public void setRoomName(String roomName){
@@ -43,30 +72,13 @@ public class Room extends javax.swing.JFrame {
     }
     
     public void updateRoom(){
-//        try {
-//            out.println("ru " + roomName.getText());
-//            String players = in.readLine();
-//            DefaultListModel<String> allPlayersName = new DefaultListModel<>();
-//            for(String name:players.split("-")){
-//                allPlayersName.addElement(name);
-//            }
-//            playerList.setModel(allPlayersName);
-//        } catch (IOException ex) {
-//            System.out.println("Room update error : " + ex);
-//        }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true){
                     try {
                         out.println("ru " + roomName.getText());
-                        String players = in.readLine();
-                        DefaultListModel<String> allPlayersName = new DefaultListModel<>();
-                        for(String name:players.split("-")){
-                            allPlayersName.addElement(name);
-                        }
-                        playerList.setModel(allPlayersName);
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     } catch (Exception ex) {
                         System.out.println("error : " + ex);
                     }
@@ -75,6 +87,10 @@ public class Room extends javax.swing.JFrame {
         }).start();
     }
     
+    public void setHost(){
+        btStart.setEnabled(true);
+        btKick.setEnabled(true);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -90,9 +106,9 @@ public class Room extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         playerList = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btStart = new javax.swing.JButton();
+        btKick = new javax.swing.JButton();
+        btBackToLobby = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -105,11 +121,26 @@ public class Room extends javax.swing.JFrame {
         playerList.setFont(new java.awt.Font("Kanit", 0, 18)); // NOI18N
         jScrollPane1.setViewportView(playerList);
 
-        jButton1.setText("START");
+        btStart.setText("START");
+        btStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btStartActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("KICK");
+        btKick.setText("KICK");
+        btKick.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btKickActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("BACK");
+        btBackToLobby.setText("BACK");
+        btBackToLobby.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBackToLobbyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,11 +148,11 @@ public class Room extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btKick, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(213, 213, 213)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btBackToLobby, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,9 +160,9 @@ public class Room extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btKick, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btBackToLobby, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(137, 137, 137))
         );
 
@@ -178,6 +209,26 @@ public class Room extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btBackToLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackToLobbyActionPerformed
+        out.println("bk -");
+        Lobby lobby = new Lobby();
+        lobby.setSocket(socket, in, out);
+        lobby.setListRoom();
+        setAlwaysOnTop(true);
+        lobby.setSize(getSize());
+        lobby.setLocationRelativeTo(this);
+        lobby.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btBackToLobbyActionPerformed
+
+    private void btKickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btKickActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btKickActionPerformed
+
+    private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
+        out.println("st -");
+    }//GEN-LAST:event_btStartActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -214,10 +265,10 @@ public class Room extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBackToLobby;
+    private javax.swing.JButton btKick;
+    private javax.swing.JButton btStart;
     private gingermathgame.GradientPanel gradientPanel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> playerList;

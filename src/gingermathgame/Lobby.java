@@ -69,8 +69,6 @@ public class Lobby extends javax.swing.JFrame {
                 }
             }
         }).start();
-        
-        
     }
     
 
@@ -96,6 +94,7 @@ public class Lobby extends javax.swing.JFrame {
         btCreate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btRefresh = new javax.swing.JButton();
+        btBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -139,6 +138,13 @@ public class Lobby extends javax.swing.JFrame {
             }
         });
 
+        btBack.setText("BACK");
+        btBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -149,7 +155,8 @@ public class Lobby extends javax.swing.JFrame {
                     .addComponent(btJoin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         rightPanelLayout.setVerticalGroup(
@@ -161,7 +168,9 @@ public class Lobby extends javax.swing.JFrame {
                 .addComponent(btRefresh)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btBack)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -226,7 +235,18 @@ public class Lobby extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
-        setListRoom();
+        try {
+            out.println("on -");
+            listRooms = new DefaultListModel<>();
+            String lst = in.readLine();
+            System.out.println(lst);
+            for(String str:lst.split("-")){
+                listRooms.addElement(str);
+            }
+            listOfRooms.setModel(listRooms);
+        } catch (IOException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void btJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJoinActionPerformed
@@ -250,6 +270,7 @@ public class Lobby extends javax.swing.JFrame {
             System.out.println(createRoomName);
             out.println("cr " + createRoomName);
             Room room = new Room();
+            room.setHost();
             room.setRoomName(createRoomName);
             room.setSocket(socket, in, out);
             room.updateRoom();
@@ -260,6 +281,14 @@ public class Lobby extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_btCreateActionPerformed
+
+    private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
+        MainMenu mm = new MainMenu();
+        mm.setSocket(socket, in, out);
+        mm.setSize(getSize());
+        mm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,6 +326,7 @@ public class Lobby extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBack;
     private javax.swing.JButton btCreate;
     private javax.swing.JButton btJoin;
     private javax.swing.JButton btRefresh;

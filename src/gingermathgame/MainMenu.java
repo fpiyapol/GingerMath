@@ -39,15 +39,11 @@ public class MainMenu extends javax.swing.JFrame{
         buttonPanel.setBackground(new Color(0, 0, 0, 0));
     }
     
-    public void setSocket(Socket socket){
-        try {
-            System.out.println("Main menu set socket.");
-            this.socket = socket;
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ex) {
-            System.out.println("Main setup socket error : "  + ex);
-        }
+    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
+        System.out.println("Main menu set socket.");
+        this.socket = socket;
+        this.in = in;
+        this.out = out;
     }
     
     public void loadPlayerInformation(){
@@ -327,7 +323,7 @@ public class MainMenu extends javax.swing.JFrame{
     private void buttonMultiplayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMultiplayerActionPerformed
         Lobby lobby = new Lobby();
         lobby.setSocket(socket, in, out);
-//        lobby.setListRoom();
+        lobby.setListRoom();
         setAlwaysOnTop(true);
         lobby.setSize(getSize());
         lobby.setLocationRelativeTo(this);
