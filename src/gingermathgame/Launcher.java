@@ -34,7 +34,7 @@ public class Launcher extends javax.swing.JFrame {
             
             public void run() {
                 try {
-                    socket = new Socket("127.0.0.1", 8910);
+                    socket = new Socket("104.248.154.68", 8910);
                 } catch (IOException ex) {
                     System.out.println("StartUp error : " + ex);
                 }

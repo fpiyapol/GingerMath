@@ -59,7 +59,7 @@ public class Lobby extends javax.swing.JFrame {
                             listRooms.addElement(str);
                         }
                         listOfRooms.setModel(listRooms);
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (IOException ex) {
                         System.out.println("getList error : " + ex);
                     } catch (InterruptedException ex) {
