@@ -6,55 +6,37 @@
 package gingermathgame;
 
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author 60070052
+ * @author Corvette
  */
-public class Launcher extends javax.swing.JFrame {
-    
-    private Socket socket;
-    private MainMenu mainMenu;
-    private BufferedReader in;
-    private PrintWriter out;
-    
+public class Prepare extends javax.swing.JFrame {
+
     /**
-     * Creates new form loadGUI
+     * Creates new form NewJFrame
      */
-    public Launcher() {
+    public Prepare() {
         initComponents();
+        setBackground(new Color(0, 0, 0, 70));
         
-        setBackground(new Color(0, 0, 0, 0));
-        jPanel1.setBackground(new Color(0, 0 ,0, 0));
-        setLocationRelativeTo(null);
         Thread t = new Thread(new Runnable() {
-            
+            @Override
             public void run() {
                 try {
-                    socket = new Socket("127.0.0.1", 8910);
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    out = new PrintWriter(socket.getOutputStream(), true);
-                } catch (IOException ex) {
-                    System.out.println("StartUp error : " + ex);
-                }
-                for(int i=0; i<=3; i++){
-                    try {
-                        if(i==3){
-                            mainMenu = new MainMenu();
-                            mainMenu.setSocket(socket, in, out);
-                            mainMenu.setVisible(true);
-                            mainMenu.loadPlayerInformation();
-                            dispose();
-                        }
-                        Thread.sleep(1000);
-                    } catch (Exception ex) {
-                        System.out.println(ex);
-                    }
+                    Thread.sleep(1000);
+                    jLabel1.setText("2");
+                    Thread.sleep(1000);
+                    jLabel1.setText("1");
+                    Thread.sleep(1000);
+                    jLabel1.setText("START");
+                    Thread.sleep(400);
+                    dispose();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -70,41 +52,48 @@ public class Launcher extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
-        jPanel1.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Sweet Sensations Personal Use", 3, 120)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SOV_Thanamas", 0, 100)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ginger Math ");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 700, 170);
-
-        jLabel2.setFont(new java.awt.Font("Sweet Sensations Personal Use", 3, 120)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Ginger Math ");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(60, 10, 630, 160);
+        jLabel1.setText("3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(227, 227, 227)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addGap(227, 227, 227))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addGap(150, 150, 150))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        double component = getWidth()*getHeight();
+        double current = 854*480;
+        double set = Math.log((component/current)) + 1;
+    
+        jLabel1.setFont(new Font(jLabel1.getFont().getName(), jLabel1.getFont().getStyle(), (int)(100*set)));
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
@@ -123,18 +112,14 @@ public class Launcher extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Launcher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Prepare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Launcher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Prepare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Launcher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Prepare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Launcher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Prepare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -143,14 +128,12 @@ public class Launcher extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Launcher().setVisible(true);
+                new Prepare().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

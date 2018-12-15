@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -35,30 +37,38 @@ public class Lobby extends javax.swing.JFrame {
         rightPanel.setBackground(new Color(0, 0, 0, 0));            
         }
     
-    public void setSocket(Socket socket){
-        try {
+    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
             System.out.println("Lobby set socket");
             this.socket = socket;
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ex) {
-            System.out.println("Lobby error : " + ex);
-        }
+            this.in = in;
+            this.out = out;
     }
     
     public void setListRoom(){
-        try {
-            out.println("on -");
-            listRooms = new DefaultListModel<>();
-            String lst = in.readLine();
-            System.out.println(lst);
-            for(String str:lst.split("-")){
-                listRooms.addElement(str);
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        out.println("on -");
+                        listRooms = new DefaultListModel<>();
+                        String lst = in.readLine();
+                        System.out.println(lst);
+                        for(String str:lst.split("-")){
+                            listRooms.addElement(str);
+                        }
+                        listOfRooms.setModel(listRooms);
+                        Thread.sleep(5000);
+                    } catch (IOException ex) {
+                        System.out.println("getList error : " + ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
             }
-            listOfRooms.setModel(listRooms);
-        } catch (IOException ex) {
-            System.out.println("getList error : " + ex);
-        }
+        }).start();
     }
     
 
@@ -80,10 +90,11 @@ public class Lobby extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         rightPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btJoin = new javax.swing.JButton();
         btCreate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btRefresh = new javax.swing.JButton();
+        btBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -104,10 +115,10 @@ public class Lobby extends javax.swing.JFrame {
 
         rightPanel.setBackground(new java.awt.Color(255, 204, 51));
 
-        jButton1.setText("JOIN ROOM");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btJoin.setText("JOIN ROOM");
+        btJoin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btJoinActionPerformed(evt);
             }
         });
 
@@ -127,6 +138,13 @@ public class Lobby extends javax.swing.JFrame {
             }
         });
 
+        btBack.setText("BACK");
+        btBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -134,22 +152,25 @@ public class Lobby extends javax.swing.JFrame {
             .addGroup(rightPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btJoin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(btJoin, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRefresh)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btBack)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -214,25 +235,60 @@ public class Lobby extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
-        setListRoom();
+        try {
+            out.println("on -");
+            listRooms = new DefaultListModel<>();
+            String lst = in.readLine();
+            System.out.println(lst);
+            for(String str:lst.split("-")){
+                listRooms.addElement(str);
+            }
+            listOfRooms.setModel(listRooms);
+        } catch (IOException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btRefreshActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateActionPerformed
-        String createRoomName = (String)JOptionPane.showInputDialog(null, "Create room : ", "Create Room", JOptionPane.PLAIN_MESSAGE, null, null, "room_name");
-        System.out.println(createRoomName);
-        out.println("cr " + createRoomName);
+    private void btJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJoinActionPerformed
+        String getRoomName = listOfRooms.getSelectedValue();
+        System.out.println(getRoomName);
+        out.println("jn " + getRoomName);
         Room room = new Room();
-        room.setRoomName(createRoomName);
+        room.setRoomName(getRoomName);
+        room.setSocket(socket, in, out);
+        room.updateRoom();
         setAlwaysOnTop(true);
         room.setSize(getSize());
         room.setLocationRelativeTo(this);
         room.setVisible(true);
         dispose();
+    }//GEN-LAST:event_btJoinActionPerformed
+
+    private void btCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateActionPerformed
+        String createRoomName = (String)JOptionPane.showInputDialog(null, "Create room : ", "Create Room", JOptionPane.PLAIN_MESSAGE, null, null, "room_name");
+        if(createRoomName != null && createRoomName.length() > 0){
+            System.out.println(createRoomName);
+            out.println("cr " + createRoomName);
+            Room room = new Room();
+            room.setHost();
+            room.setRoomName(createRoomName);
+            room.setSocket(socket, in, out);
+            room.updateRoom();
+            setAlwaysOnTop(true);
+            room.setSize(getSize());
+            room.setLocationRelativeTo(this);
+            room.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btCreateActionPerformed
+
+    private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
+        MainMenu mm = new MainMenu();
+        mm.setSocket(socket, in, out);
+        mm.setSize(getSize());
+        mm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,14 +326,14 @@ public class Lobby extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBack;
     private javax.swing.JButton btCreate;
+    private javax.swing.JButton btJoin;
     private javax.swing.JButton btRefresh;
     private gingermathgame.GradientPanel gradientPanel1;
     private javax.swing.JPanel groupPanel1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;

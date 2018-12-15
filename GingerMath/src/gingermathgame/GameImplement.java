@@ -1,8 +1,10 @@
 package gingermathgame;
 
 import java.util.ArrayList;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class GameImplement{
 
@@ -47,6 +49,24 @@ public class GameImplement{
     public void setTimeLabel(JLabel timeLabel){
         timer.setTimerLabel(timeLabel);
     }
+    
+    public void setAnswerField(JTextField answerField){
+        timer.setTextField(answerField);
+    }
+    
+    public void setTimeoutDialog(JDialog timeoutDialog){
+        timer.setTimeOutDialog(timeoutDialog);
+    }
+    
+    public void setScoreShowLabel(JLabel scoreShowLabel){
+        timer.setShowScoreLabel(scoreShowLabel);
+    }
+    
+    public void setStatus(Boolean pauseFlag, Boolean playerExitFlag){
+        System.out.println("imple "+pauseFlag+" "+playerExitFlag);
+        timer.setStatus(pauseFlag, playerExitFlag);
+    }
+    
     
     public boolean check(int answer){
         int ans = num1.get(no)+num2.get(no);

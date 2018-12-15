@@ -7,6 +7,7 @@ package gingermathgame;
 
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -91,7 +92,7 @@ public class SettingDialog extends javax.swing.JDialog {
         resLabel.setText("Resolution");
 
         box.setFont(new java.awt.Font("Kanit Thin", 1, 14)); // NOI18N
-        box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "800 x 600", "854 x 480", "1280 x 720", "1366 x 768", "1600 x 900", "1920 x 1080", "Full Screen" }));
+        box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "800 x 600 ", "854 x 480 ", "1280 x 720 ", "1366 x 768  ", "1600 x 900  ", "1920 x 1080  ", "Full Screen " }));
         box.setSelectedItem(getSize().width+" x "+getSize().height);
         box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,19 +131,18 @@ public class SettingDialog extends javax.swing.JDialog {
                         .addGap(52, 52, 52)
                         .addComponent(applyBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(13, 13, 13)))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(27, 27, 27))
+                        .addGap(14, 14, 14)
+                        .addComponent(closeBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(53, 53, 53))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
                         .addComponent(soundToggle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(40, 40, 40))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(closeBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(53, 53, 53))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(box, 0, 0, Short.MAX_VALUE)
+                        .addGap(28, 28, 28))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -272,6 +272,7 @@ public class SettingDialog extends javax.swing.JDialog {
 
     private void applyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtActionPerformed
         String item = (String)box.getSelectedItem();
+        item = item.trim();
         String[] parts = item.split(" x ");
         screenSize = parts;
         dispose();
@@ -324,6 +325,10 @@ public class SettingDialog extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SettingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

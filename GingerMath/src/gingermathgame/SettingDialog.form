@@ -90,21 +90,20 @@
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="box" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="closeBt" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="soundToggle" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Component id="closeBt" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="box" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -203,13 +202,13 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="7">
-                <StringItem index="0" value="800 x 600"/>
-                <StringItem index="1" value="854 x 480"/>
-                <StringItem index="2" value="1280 x 720"/>
-                <StringItem index="3" value="1366 x 768"/>
-                <StringItem index="4" value="1600 x 900"/>
-                <StringItem index="5" value="1920 x 1080"/>
-                <StringItem index="6" value="Full Screen"/>
+                <StringItem index="0" value="800 x 600 "/>
+                <StringItem index="1" value="854 x 480 "/>
+                <StringItem index="2" value="1280 x 720 "/>
+                <StringItem index="3" value="1366 x 768  "/>
+                <StringItem index="4" value="1600 x 900  "/>
+                <StringItem index="5" value="1920 x 1080  "/>
+                <StringItem index="6" value="Full Screen "/>
               </StringArray>
             </Property>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

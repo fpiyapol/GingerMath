@@ -5,8 +5,12 @@
  */
 package gingermathgame;
 
+import java.awt.Dialog;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -16,7 +20,13 @@ public class Timer implements Runnable{
     
     private JLabel timeLabel;
     private JFrame parentFrame;
-    private int score;
+    private JTextField answerField;
+    private JDialog timeoutDialog;
+    private JLabel showScoreLabel;
+    private boolean pauseFlag;
+    private boolean playerExitFlag;
+    
+    protected int score;
     
     public void setTimerLabel(JLabel timeLabel){
         this.timeLabel = timeLabel;
@@ -30,16 +40,48 @@ public class Timer implements Runnable{
         this.score = score;
     }
     
+    public void setTextField(JTextField answerField){
+        this.answerField = answerField;
+    }
+    
+    public void setTimeOutDialog(JDialog timeoutDialog){
+        this.timeoutDialog = timeoutDialog;
+    }
+    
+    public void setShowScoreLabel(JLabel showScoreLabel){
+        this.showScoreLabel = showScoreLabel;
+    }
+    
+    public void setStatus(boolean pauseFlag, boolean playerExitFlag){
+        this.pauseFlag = pauseFlag;
+        this.playerExitFlag = playerExitFlag;
+    }
+    
     public void run() {
-        for(int t=10; t>=0; t--) {
+        for(int t=60; t>=0; t--) {
             try {
                 timeLabel.setText(t + "   ");
                 Thread.sleep(1000);
+                while(pauseFlag){
+                    System.out.println("pause");
+                }
+                if(playerExitFlag){
+                    return;
+                }
+                
             } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
         }
-        
-        TimeOutDialog to = new TimeOutDialog(parentFrame, true, score);
+//        TimeOutDialog to = new TimeOutDialog(parentFrame, true, score);
+//        GamePlayScreen.scoreShowLabel.setText(" Your Score  "+score);
+
+        if(!playerExitFlag){
+            answerField.setEditable(false);
+            showScoreLabel.setText(" Your Score  "+score);
+            timeoutDialog.setSize(parentFrame.getSize());
+            timeoutDialog.setLocationRelativeTo(parentFrame);
+            timeoutDialog.setVisible(true);
+        }
     }
 }
