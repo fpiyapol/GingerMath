@@ -19,8 +19,6 @@ import java.net.Socket;
 public class Launcher extends javax.swing.JFrame {
     
     private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
     private MainMenu mainMenu;
     
     /**
@@ -37,9 +35,6 @@ public class Launcher extends javax.swing.JFrame {
             public void run() {
                 try {
                     socket = new Socket("127.0.0.1", 8910);
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    out = new PrintWriter(socket.getOutputStream(), true);
-                    out.println("name player2");
                 } catch (IOException ex) {
                     System.out.println("StartUp error : " + ex);
                 }
@@ -47,8 +42,9 @@ public class Launcher extends javax.swing.JFrame {
                     try {
                         if(i==3){
                             mainMenu = new MainMenu();
-                            mainMenu.setSocket(socket, in, out);
+                            mainMenu.setSocket(socket);
                             mainMenu.setVisible(true);
+                            mainMenu.loadPlayerInformation();
                             dispose();
                         }
                         Thread.sleep(1000);

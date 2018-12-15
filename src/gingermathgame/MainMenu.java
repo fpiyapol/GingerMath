@@ -4,8 +4,13 @@ package gingermathgame;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,13 +21,14 @@ public class MainMenu extends javax.swing.JFrame{
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private PlayerInformation playerInfo;
 
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
         initComponents();
-        setAlwaysOnTop(true);
+//        setAlwaysOnTop(true);
         setLocationRelativeTo(null);
         setSize(854, 480);
         jPanel1.setBackground(new Color(0, 0, 0, 0));
@@ -33,11 +39,39 @@ public class MainMenu extends javax.swing.JFrame{
         buttonPanel.setBackground(new Color(0, 0, 0, 0));
     }
     
-    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
-        System.out.println("Main menu set socket.");
-        this.socket = socket;
-        this.in = in;
-        this.out = out;
+    public void setSocket(Socket socket){
+        try {
+            System.out.println("Main menu set socket.");
+            this.socket = socket;
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ex) {
+            System.out.println("Main setup socket error : "  + ex);
+        }
+    }
+    
+    public void loadPlayerInformation(){
+        playerInfo = new PlayerInformation();
+        if(playerInfo.loadInformation()){
+            out.println("name " + playerInfo.getName());
+        }else{
+            while(true){
+                try {
+                    String createPlayerName = (String)JOptionPane.showInputDialog(null, "player name : ", "Create new player", JOptionPane.PLAIN_MESSAGE, null, null, "name");
+                    out.println("name " + createPlayerName);
+                    String feedback = in.readLine();
+                    if(feedback.equals("acc")){
+                        playerInfo.setName(createPlayerName);
+                        JOptionPane.showMessageDialog(null, "Done");
+                        break;
+                    }else if(feedback.equals("dup")){
+                        JOptionPane.showMessageDialog(null, "name duplicate","Create player name",JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+        }
     }
     
    

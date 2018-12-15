@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -43,18 +45,32 @@ public class Lobby extends javax.swing.JFrame {
     }
     
     public void setListRoom(){
-        try {
-            out.println("on -");
-            listRooms = new DefaultListModel<>();
-            String lst = in.readLine();
-            System.out.println(lst);
-            for(String str:lst.split("-")){
-                listRooms.addElement(str);
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        out.println("on -");
+                        listRooms = new DefaultListModel<>();
+                        String lst = in.readLine();
+                        System.out.println(lst);
+                        for(String str:lst.split("-")){
+                            listRooms.addElement(str);
+                        }
+                        listOfRooms.setModel(listRooms);
+                        Thread.sleep(1000);
+                    } catch (IOException ex) {
+                        System.out.println("getList error : " + ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
             }
-            listOfRooms.setModel(listRooms);
-        } catch (IOException ex) {
-            System.out.println("getList error : " + ex);
-        }
+        }).start();
+        
+        
     }
     
 
@@ -230,17 +246,19 @@ public class Lobby extends javax.swing.JFrame {
 
     private void btCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateActionPerformed
         String createRoomName = (String)JOptionPane.showInputDialog(null, "Create room : ", "Create Room", JOptionPane.PLAIN_MESSAGE, null, null, "room_name");
-        System.out.println(createRoomName);
-        out.println("cr " + createRoomName);
-        Room room = new Room();
-        room.setRoomName(createRoomName);
-        room.setSocket(socket, in, out);
-        room.updateRoom();
-        setAlwaysOnTop(true);
-        room.setSize(getSize());
-        room.setLocationRelativeTo(this);
-        room.setVisible(true);
-        dispose();
+        if(createRoomName != null && createRoomName.length() > 0){
+            System.out.println(createRoomName);
+            out.println("cr " + createRoomName);
+            Room room = new Room();
+            room.setRoomName(createRoomName);
+            room.setSocket(socket, in, out);
+            room.updateRoom();
+            setAlwaysOnTop(true);
+            room.setSize(getSize());
+            room.setLocationRelativeTo(this);
+            room.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btCreateActionPerformed
 
     /**
