@@ -28,6 +28,7 @@ public class Room extends javax.swing.JFrame {
      */
     public Room() {
         initComponents();
+        System.out.println(getSize());
         jPanel1.setBackground(new Color(0, 0, 0, 0));
         btStart.setEnabled(false);
         btKick.setEnabled(false);
@@ -50,6 +51,14 @@ public class Room extends javax.swing.JFrame {
                                 playerList.setModel(allPlayersName);
                             }else if(dt[0].equals("st")){
                                 System.out.println("let's play !!!!!!!!!!!!!!!!!!!!!!!!");
+                                GameImplement game = new GameImplement();
+                                GamePlayScreen gameGUI = new GamePlayScreen(game);
+                                setAlwaysOnTop(true);
+                                gameGUI.setSize(getSize());
+//                                gameGUI.setLocationRelativeTo(this);
+                                gameGUI.setVisible(true);
+                                dispose();
+                                
                             }
                                 
                         }

@@ -63,7 +63,7 @@ public class Timer implements Runnable{
                 timeLabel.setText(t + "   ");
                 Thread.sleep(1000);
                 while(pauseFlag){
-                    System.out.println("pause");
+                    //Empty code for Pause States
                 }
                 if(playerExitFlag){
                     return;

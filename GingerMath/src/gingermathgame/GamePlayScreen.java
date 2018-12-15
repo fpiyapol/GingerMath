@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class GamePlayScreen extends javax.swing.JFrame {
     
     private static GameImplement game;
+    private Prepare pre;
     
     public GamePlayScreen() {
 //       initComponents();
@@ -28,6 +29,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         jPanel2.setBackground(new Color(0, 0, 0, 0));
         answerField.setBackground(new Color(0, 0, 0, 10));
         timeLabel.setText("");
+        
         
         this.game = game;
         game.setParentFrame(this);
@@ -565,11 +567,18 @@ public class GamePlayScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_answerFieldKeyPressed
 
     private void answerFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answerFieldActionPerformed
-        int res = Integer.parseInt(answerField.getText());
-        if(game.check(res)){
-            scoreLabel.setText("  Score : " + game.getScore());
-            answerField.setText("");
-            problemLabel.setText(game.getProblem1() + " + " + game.getProblem2());
+        try{
+            int res = Integer.parseInt(answerField.getText());
+            if(game.check(res)){
+                scoreLabel.setText("  Score : " + game.getScore());
+                answerField.setText("");
+                answerField.setBackground(new Color(0, 0, 0, 10));
+                problemLabel.setText(game.getProblem1() + " + " + game.getProblem2());
+            }else{
+                answerField.setBackground(new Color(253, 66, 26, 90));
+            }
+        }catch(NumberFormatException ex){
+            answerField.setBackground(new Color(253, 66, 26, 90));
         }
         
     }//GEN-LAST:event_answerFieldActionPerformed

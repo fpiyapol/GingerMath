@@ -16,6 +16,8 @@ public class GameImplement{
     private int guess; // number that player has input
     private int no = 0; // index in pack of number (use both)
     private Timer timer;
+    private Prepare pp;
+    private JFrame parentFrame;
     
     public GameImplement() {
         timer = new Timer();
@@ -44,6 +46,7 @@ public class GameImplement{
     
     public void setParentFrame(JFrame parentFrame){
         timer.setPrentFrame(parentFrame);
+        this.parentFrame = parentFrame;
     }
     
     public void setTimeLabel(JLabel timeLabel){
@@ -67,7 +70,6 @@ public class GameImplement{
         timer.setStatus(pauseFlag, playerExitFlag);
     }
     
-    
     public boolean check(int answer){
         int ans = num1.get(no)+num2.get(no);
         if(answer == ans){
@@ -87,6 +89,26 @@ public class GameImplement{
             NumberGenerator.genNum(num1);
             NumberGenerator.genNum(num2);
         }
-        new Thread(timer).start();
+        
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Prepare pp = new Prepare(parentFrame);
+                    Thread.sleep(1000);
+                    pp.setPrepareText("2");
+                    Thread.sleep(1000);
+                    pp.setPrepareText("1");
+                    Thread.sleep(1000);
+                    pp.setPrepareText("START");
+                    Thread.sleep(400);
+                    pp.dispose();
+                    new Thread(timer).start();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        t.start();
     }
 }
