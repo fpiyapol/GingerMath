@@ -20,10 +20,18 @@ public class SettingDialog extends javax.swing.JDialog {
      */
     
     private String[] screenSize;
+    private boolean soundChk;
     
     public SettingDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        if(!soundChk){
+            soundToggle.setBackground(new Color(100, 108, 119));
+            soundToggle.setText("OFF");
+        }
+        
+        
         setBackground(new Color(0,0,0,70));
         setSize(parent.getSize());
         setLocationRelativeTo(parent);
@@ -294,7 +302,11 @@ public class SettingDialog extends javax.swing.JDialog {
             soundToggle.setText("ON");
         }
     }//GEN-LAST:event_soundToggleActionPerformed
-
+    
+    public boolean getSoundChk(){
+        return soundChk;
+    }
+     
     public String[] run(){
         this.setVisible(true);
         return screenSize;

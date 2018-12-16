@@ -29,6 +29,7 @@ public class MainMenu extends javax.swing.JFrame{
     public MainMenu() {
         initComponents();
 //        setAlwaysOnTop(true);
+
         setLocationRelativeTo(null);
         setSize(854, 480);
         jPanel1.setBackground(new Color(0, 0, 0, 0));
@@ -37,6 +38,7 @@ public class MainMenu extends javax.swing.JFrame{
         jPanel4.setBackground(new Color(0, 0, 0, 0));
         jPanel5.setBackground(new Color(0, 0, 0, 0));
         buttonPanel.setBackground(new Color(0, 0, 0, 0));
+        
     }
     
     public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
@@ -304,6 +306,8 @@ public class MainMenu extends javax.swing.JFrame{
             setSize(width, height);
             setLocationRelativeTo(null);
         }
+        
+        
     }//GEN-LAST:event_buttonSettActionPerformed
 
     private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
@@ -357,6 +361,8 @@ public class MainMenu extends javax.swing.JFrame{
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

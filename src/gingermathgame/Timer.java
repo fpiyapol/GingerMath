@@ -26,6 +26,8 @@ public class Timer implements Runnable{
     private boolean pauseFlag;
     private boolean playerExitFlag;
     
+    private boolean multiChk;
+    
     protected int score;
     
     public void setTimerLabel(JLabel timeLabel){
@@ -40,17 +42,17 @@ public class Timer implements Runnable{
         this.score = score;
     }
     
-    public void setTextField(JTextField answerField){
-        this.answerField = answerField;
-    }
     
-    public void setTimeOutDialog(JDialog timeoutDialog){
+    public void setTimeOutDialog(JDialog timeoutDialog, JTextField answerField, JLabel showScoreLabel){
         this.timeoutDialog = timeoutDialog;
-    }
-    
-    public void setShowScoreLabel(JLabel showScoreLabel){
+        this.answerField = answerField;
         this.showScoreLabel = showScoreLabel;
     }
+    
+    public void setTimeoutMulti(){
+        
+    }
+    
     
     public void setStatus(boolean pauseFlag, boolean playerExitFlag){
         this.pauseFlag = pauseFlag;
@@ -63,7 +65,7 @@ public class Timer implements Runnable{
                 timeLabel.setText(t + "   ");
                 Thread.sleep(1000);
                 while(pauseFlag){
-                    System.out.println("pause");
+                    //Empty code for Pause States
                 }
                 if(playerExitFlag){
                     return;
@@ -73,8 +75,6 @@ public class Timer implements Runnable{
                 System.out.println(ex);
             }
         }
-//        TimeOutDialog to = new TimeOutDialog(parentFrame, true, score);
-//        GamePlayScreen.scoreShowLabel.setText(" Your Score  "+score);
 
         if(!playerExitFlag){
             answerField.setEditable(false);

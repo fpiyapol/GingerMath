@@ -26,6 +26,7 @@ public class Lobby extends javax.swing.JFrame {
     private BufferedReader in;
     private PrintWriter out;
     private DefaultListModel<String> listRooms;
+    private boolean lobbyFlag = true;
 
     /**
      * Creates new form Lobby
@@ -49,7 +50,7 @@ public class Lobby extends javax.swing.JFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while(lobbyFlag){
                     try {
                         out.println("on -");
                         listRooms = new DefaultListModel<>();
@@ -252,6 +253,7 @@ public class Lobby extends javax.swing.JFrame {
     private void btJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJoinActionPerformed
         String getRoomName = listOfRooms.getSelectedValue();
         System.out.println(getRoomName);
+        lobbyFlag = false;
         out.println("jn " + getRoomName);
         Room room = new Room();
         room.setRoomName(getRoomName);
@@ -268,6 +270,7 @@ public class Lobby extends javax.swing.JFrame {
         String createRoomName = (String)JOptionPane.showInputDialog(null, "Create room : ", "Create Room", JOptionPane.PLAIN_MESSAGE, null, null, "room_name");
         if(createRoomName != null && createRoomName.length() > 0){
             System.out.println(createRoomName);
+            lobbyFlag = false;
             out.println("cr " + createRoomName);
             Room room = new Room();
             room.setHost();

@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
 public class GamePlayScreen extends javax.swing.JFrame {
     
     private static GameImplement game;
-    
+    private Prepare pre;
+    private boolean multiChk;
+            
     public GamePlayScreen() {
 //       initComponents();
     }
@@ -26,15 +28,22 @@ public class GamePlayScreen extends javax.swing.JFrame {
         initComponents();
         jPanel1.setBackground(new Color(0, 0, 0, 0));
         jPanel2.setBackground(new Color(0, 0, 0, 0));
+        scoreLabel.setBackground(new Color(0, 0, 0, 0));
         answerField.setBackground(new Color(0, 0, 0, 10));
         timeLabel.setText("");
+        
         
         this.game = game;
         game.setParentFrame(this);
         game.setTimeLabel(timeLabel);
-        game.setAnswerField(answerField);
-        game.setTimeoutDialog(timeoutDialog);
-        game.setScoreShowLabel(todscoreShowLabel);
+        
+//        if(game.getMultiChk()){
+////            game.setTimeoutMulti(timeoutMulti, answerField);
+//        }else{
+            game.setTimeoutDialog(timeoutDialog, answerField, todscoreShowLabel);
+//        }
+        
+        
         game.setStatus(false, false); // 1st is Pause Activate 2nd is Exit
         game.start();
         
@@ -55,6 +64,14 @@ public class GamePlayScreen extends javax.swing.JFrame {
         pdPanelRight.setBackground(new Color(0,0,0,0));
         pdPanelTop.setBackground(new Color(0,0,0,0));
         pdPanelBottom.setBackground(new Color(0,0,0,0));
+        
+        //timeoutMulti
+        timeoutMulti.setBackground(new Color(0,0,0,70));
+        tomPanelCenter.setBackground(new Color(255,185,50));
+        tomPanelLeft.setBackground(new Color(0,0,0,0));
+        tomPanelRight.setBackground(new Color(0,0,0,0));
+        tomPanelTop.setBackground(new Color(0,0,0,0));
+        tomPanelBottom.setBackground(new Color(0,0,0,0));
     
  
     }
@@ -90,13 +107,25 @@ public class GamePlayScreen extends javax.swing.JFrame {
         pdGamepauseLabel = new javax.swing.JLabel();
         pdMessageLabel1 = new javax.swing.JLabel();
         pdMessageLabel2 = new javax.swing.JLabel();
+        timeoutMulti = new javax.swing.JDialog();
+        tomPanelLeft = new javax.swing.JPanel();
+        tomPanelRight = new javax.swing.JPanel();
+        tomPanelBottom = new javax.swing.JPanel();
+        tomPanelTop = new javax.swing.JPanel();
+        tomPanelCenter = new javax.swing.JPanel();
+        tomTimeoutLabel = new javax.swing.JLabel();
+        tomPlayer1 = new javax.swing.JLabel();
+        tomPlayer2 = new javax.swing.JLabel();
+        tomPlayer3 = new javax.swing.JLabel();
+        tomPlayer4 = new javax.swing.JLabel();
+        tomBackRoomBt = new javax.swing.JButton();
         gradientPanel1 = new gingermathgame.GradientPanel();
         answerField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        scoreLabel = new javax.swing.JLabel();
         problemLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
+        scoreLabel = new javax.swing.JTextArea();
 
         timeoutDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         timeoutDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
@@ -111,7 +140,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todPanelLeft.setLayout(todPanelLeftLayout);
         todPanelLeftLayout.setHorizontalGroup(
             todPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
+            .addGap(0, 169, Short.MAX_VALUE)
         );
         todPanelLeftLayout.setVerticalGroup(
             todPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +151,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todPanelRight.setLayout(todPanelRightLayout);
         todPanelRightLayout.setHorizontalGroup(
             todPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 176, Short.MAX_VALUE)
+            .addGap(0, 171, Short.MAX_VALUE)
         );
         todPanelRightLayout.setVerticalGroup(
             todPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +166,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         );
         todPanelTopLayout.setVerticalGroup(
             todPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
+            .addGap(0, 56, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout todPanelBottomLayout = new javax.swing.GroupLayout(todPanelBottom);
@@ -148,13 +177,13 @@ public class GamePlayScreen extends javax.swing.JFrame {
         );
         todPanelBottomLayout.setVerticalGroup(
             todPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
+            .addGap(0, 56, Short.MAX_VALUE)
         );
 
         todtimeoutLabel.setFont(new java.awt.Font("Sweet Sensations Personal Use", 1, 48)); // NOI18N
         todtimeoutLabel.setForeground(new java.awt.Color(255, 255, 255));
         todtimeoutLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        todtimeoutLabel.setText("Timeout");
+        todtimeoutLabel.setText(" Timeout ");
 
         todscoreShowLabel.setFont(new java.awt.Font("Sweet Pea", 1, 36)); // NOI18N
         todscoreShowLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,14 +195,20 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todmsgLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         todmsgLabel.setText("Congratulation");
 
-        todbackBt.setText("Back to Main Menu");
+        todbackBt.setBackground(new java.awt.Color(159, 99, 165));
+        todbackBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
+        todbackBt.setForeground(new java.awt.Color(255, 255, 255));
+        todbackBt.setText(" Back to Main Menu ");
         todbackBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 todbackBtActionPerformed(evt);
             }
         });
 
-        todscoreBoardBt.setText("Scoreboard");
+        todscoreBoardBt.setBackground(new java.awt.Color(75, 137, 218));
+        todscoreBoardBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
+        todscoreBoardBt.setForeground(new java.awt.Color(255, 255, 255));
+        todscoreBoardBt.setText(" Scoreboard ");
 
         javax.swing.GroupLayout todPanelCenterLayout = new javax.swing.GroupLayout(todPanelCenter);
         todPanelCenter.setLayout(todPanelCenterLayout);
@@ -197,11 +232,11 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todPanelCenterLayout.setVerticalGroup(
             todPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(todPanelCenterLayout.createSequentialGroup()
-                .addComponent(todtimeoutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                .addComponent(todtimeoutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(todscoreShowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                .addComponent(todscoreShowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(todmsgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                .addComponent(todmsgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(todPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(todbackBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -298,7 +333,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        pdExitBt.setBackground(new java.awt.Color(100, 108, 119));
+        pdExitBt.setBackground(new java.awt.Color(255, 92, 51));
         pdExitBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
         pdExitBt.setForeground(new java.awt.Color(255, 255, 255));
         pdExitBt.setText(" I'm quit ");
@@ -404,6 +439,144 @@ public class GamePlayScreen extends javax.swing.JFrame {
                 .addComponent(pdPanelBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        timeoutMulti.setUndecorated(true);
+
+        javax.swing.GroupLayout tomPanelLeftLayout = new javax.swing.GroupLayout(tomPanelLeft);
+        tomPanelLeft.setLayout(tomPanelLeftLayout);
+        tomPanelLeftLayout.setHorizontalGroup(
+            tomPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 195, Short.MAX_VALUE)
+        );
+        tomPanelLeftLayout.setVerticalGroup(
+            tomPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout tomPanelRightLayout = new javax.swing.GroupLayout(tomPanelRight);
+        tomPanelRight.setLayout(tomPanelRightLayout);
+        tomPanelRightLayout.setHorizontalGroup(
+            tomPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 195, Short.MAX_VALUE)
+        );
+        tomPanelRightLayout.setVerticalGroup(
+            tomPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout tomPanelBottomLayout = new javax.swing.GroupLayout(tomPanelBottom);
+        tomPanelBottom.setLayout(tomPanelBottomLayout);
+        tomPanelBottomLayout.setHorizontalGroup(
+            tomPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        tomPanelBottomLayout.setVerticalGroup(
+            tomPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout tomPanelTopLayout = new javax.swing.GroupLayout(tomPanelTop);
+        tomPanelTop.setLayout(tomPanelTopLayout);
+        tomPanelTopLayout.setHorizontalGroup(
+            tomPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        tomPanelTopLayout.setVerticalGroup(
+            tomPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        tomTimeoutLabel.setFont(new java.awt.Font("Sweet Sensations Personal Use", 1, 64)); // NOI18N
+        tomTimeoutLabel.setForeground(new java.awt.Color(255, 255, 255));
+        tomTimeoutLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tomTimeoutLabel.setText("Timeout");
+
+        tomPlayer1.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        tomPlayer1.setForeground(new java.awt.Color(255, 255, 255));
+        tomPlayer1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tomPlayer1.setText("jLabel2");
+
+        tomPlayer2.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        tomPlayer2.setForeground(new java.awt.Color(255, 255, 255));
+        tomPlayer2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tomPlayer2.setText("jLabel3");
+
+        tomPlayer3.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        tomPlayer3.setForeground(new java.awt.Color(255, 255, 255));
+        tomPlayer3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tomPlayer3.setText("jLabel4");
+
+        tomPlayer4.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        tomPlayer4.setForeground(new java.awt.Color(255, 255, 255));
+        tomPlayer4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tomPlayer4.setText("jLabel5");
+
+        tomBackRoomBt.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        tomBackRoomBt.setForeground(new java.awt.Color(255, 255, 255));
+        tomBackRoomBt.setText(" Back to Your Room ");
+
+        javax.swing.GroupLayout tomPanelCenterLayout = new javax.swing.GroupLayout(tomPanelCenter);
+        tomPanelCenter.setLayout(tomPanelCenterLayout);
+        tomPanelCenterLayout.setHorizontalGroup(
+            tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tomPanelCenterLayout.createSequentialGroup()
+                .addGroup(tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tomPanelCenterLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tomPlayer4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tomPlayer3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tomPlayer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tomPlayer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tomTimeoutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(tomPanelCenterLayout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(tomBackRoomBt, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                        .addGap(55, 55, 55)))
+                .addGap(50, 50, 50))
+        );
+        tomPanelCenterLayout.setVerticalGroup(
+            tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tomPanelCenterLayout.createSequentialGroup()
+                .addComponent(tomTimeoutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tomPlayer1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tomPlayer2, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tomPlayer3, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tomPlayer4, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tomBackRoomBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout timeoutMultiLayout = new javax.swing.GroupLayout(timeoutMulti.getContentPane());
+        timeoutMulti.getContentPane().setLayout(timeoutMultiLayout);
+        timeoutMultiLayout.setHorizontalGroup(
+            timeoutMultiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timeoutMultiLayout.createSequentialGroup()
+                .addComponent(tomPanelLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addGroup(timeoutMultiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tomPanelBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tomPanelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tomPanelCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(tomPanelRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        timeoutMultiLayout.setVerticalGroup(
+            timeoutMultiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tomPanelLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tomPanelRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timeoutMultiLayout.createSequentialGroup()
+                .addComponent(tomPanelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(tomPanelCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(tomPanelBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -441,7 +614,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 152, Short.MAX_VALUE)
+            .addGap(0, 132, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -455,11 +628,6 @@ public class GamePlayScreen extends javax.swing.JFrame {
             .addGap(0, 110, Short.MAX_VALUE)
         );
 
-        scoreLabel.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
-        scoreLabel.setForeground(new java.awt.Color(255, 255, 255));
-        scoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        scoreLabel.setText("  Score : 0");
-
         problemLabel.setFont(new java.awt.Font("SOV_Thanamas", 2, 48)); // NOI18N
         problemLabel.setForeground(new java.awt.Color(255, 255, 255));
         problemLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -470,6 +638,15 @@ public class GamePlayScreen extends javax.swing.JFrame {
         timeLabel.setForeground(new java.awt.Color(255, 255, 255));
         timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         timeLabel.setText("Timer");
+
+        scoreLabel.setEditable(false);
+        scoreLabel.setColumns(20);
+        scoreLabel.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        scoreLabel.setForeground(new java.awt.Color(255, 255, 255));
+        scoreLabel.setRows(5);
+        scoreLabel.setBorder(null);
+        scoreLabel.setMargin(new java.awt.Insets(40, 2, 2, 2));
+        scoreLabel.setSelectionColor(new Color(0, 0, 0, 0));
 
         javax.swing.GroupLayout gradientPanel1Layout = new javax.swing.GroupLayout(gradientPanel1);
         gradientPanel1.setLayout(gradientPanel1Layout);
@@ -483,29 +660,35 @@ public class GamePlayScreen extends javax.swing.JFrame {
                 .addGap(193, 193, 193)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(186, 186, 186))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradientPanel1Layout.createSequentialGroup()
-                .addGap(277, 277, 277)
-                .addComponent(problemLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                .addGap(277, 277, 277))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradientPanel1Layout.createSequentialGroup()
-                .addComponent(scoreLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(36, 36, 36)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(162, 162, 162)
-                .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(gradientPanel1Layout.createSequentialGroup()
+                .addComponent(scoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gradientPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(problemLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                        .addGap(277, 277, 277))
+                    .addGroup(gradientPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(43, 43, 43)
+                        .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         gradientPanel1Layout.setVerticalGroup(
             gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gradientPanel1Layout.createSequentialGroup()
                 .addGroup(gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scoreLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(gradientPanel1Layout.createSequentialGroup()
-                        .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(12, 12, 12)))
-                .addComponent(problemLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
+                        .addComponent(problemLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(gradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradientPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(scoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 66, Short.MAX_VALUE)
+                .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, Short.MAX_VALUE)
                 .addGap(50, 50, 50)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -534,7 +717,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
 
         problemLabel.setFont(new Font(problemLabel.getFont().getName(), problemLabel.getFont().getStyle(), (int)(48*(component/current))));
         answerField.setFont(new Font(answerField.getFont().getName(), answerField.getFont().getStyle(), (int)(24*(component/current))));
-        scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), scoreLabel.getFont().getStyle(), (int)(24*(component/current))));
+        scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), scoreLabel.getFont().getStyle(), (int)(18*(component/current))));
         timeLabel.setFont(new Font(timeLabel.getFont().getName(), timeLabel.getFont().getStyle(), (int)(24*(component/current))));
 
     }//GEN-LAST:event_gradientPanel1ComponentResized
@@ -565,11 +748,21 @@ public class GamePlayScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_answerFieldKeyPressed
 
     private void answerFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answerFieldActionPerformed
-        int res = Integer.parseInt(answerField.getText());
-        if(game.check(res)){
-            scoreLabel.setText("  Score : " + game.getScore());
-            answerField.setText("");
-            problemLabel.setText(game.getProblem1() + " + " + game.getProblem2());
+        try{
+            int res = Integer.parseInt(answerField.getText());
+            if(game.check(res)){
+                scoreLabel.setText("  Score : " + game.getScore());
+                scoreLabel.append("\n  Score : 1");
+                scoreLabel.append("\n  Score : 2");
+                scoreLabel.append("\n  Score : 3");
+                answerField.setText("");
+                answerField.setBackground(new Color(0, 0, 0, 10));
+                problemLabel.setText(game.getProblem1() + " + " + game.getProblem2());
+            }else{
+                answerField.setBackground(new Color(253, 66, 26, 90));
+            }
+        }catch(NumberFormatException ex){
+            answerField.setBackground(new Color(253, 66, 26, 90));
         }
         
     }//GEN-LAST:event_answerFieldActionPerformed
@@ -690,9 +883,10 @@ public class GamePlayScreen extends javax.swing.JFrame {
     private javax.swing.JPanel pdPanelRight;
     private javax.swing.JPanel pdPanelTop;
     protected static javax.swing.JLabel problemLabel;
-    protected javax.swing.JLabel scoreLabel;
+    private javax.swing.JTextArea scoreLabel;
     protected static javax.swing.JLabel timeLabel;
     protected javax.swing.JDialog timeoutDialog;
+    private javax.swing.JDialog timeoutMulti;
     private javax.swing.JPanel todPanelBottom;
     private javax.swing.JPanel todPanelCenter;
     private javax.swing.JPanel todPanelLeft;
@@ -703,5 +897,16 @@ public class GamePlayScreen extends javax.swing.JFrame {
     private javax.swing.JButton todscoreBoardBt;
     private javax.swing.JLabel todscoreShowLabel;
     private javax.swing.JLabel todtimeoutLabel;
+    private javax.swing.JButton tomBackRoomBt;
+    private javax.swing.JPanel tomPanelBottom;
+    private javax.swing.JPanel tomPanelCenter;
+    private javax.swing.JPanel tomPanelLeft;
+    private javax.swing.JPanel tomPanelRight;
+    private javax.swing.JPanel tomPanelTop;
+    private javax.swing.JLabel tomPlayer1;
+    private javax.swing.JLabel tomPlayer2;
+    private javax.swing.JLabel tomPlayer3;
+    private javax.swing.JLabel tomPlayer4;
+    private javax.swing.JLabel tomTimeoutLabel;
     // End of variables declaration//GEN-END:variables
 }

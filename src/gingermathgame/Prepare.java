@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
@@ -19,28 +20,38 @@ public class Prepare extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public Prepare() {
+    
+    public Prepare(){
+        
+    }
+    
+    
+    public Prepare(JFrame parentFrame) {
         initComponents();
         setBackground(new Color(0, 0, 0, 70));
+        setSize(parentFrame.getSize());
+        setLocationRelativeTo(parentFrame);
+        setAlwaysOnTop(true);
+        setVisible(true);
         
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    jLabel1.setText("2");
-                    Thread.sleep(1000);
-                    jLabel1.setText("1");
-                    Thread.sleep(1000);
-                    jLabel1.setText("START");
-                    Thread.sleep(400);
-                    dispose();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        t.start();
+//        Thread t = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(1000);
+//                    jLabel1.setText("2");
+//                    Thread.sleep(1000);
+//                    jLabel1.setText("1");
+//                    Thread.sleep(1000);
+//                    jLabel1.setText("START");
+//                    Thread.sleep(400);
+//                    dispose();
+//                } catch (InterruptedException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//        });
+//        t.start();
     }
 
     /**
@@ -95,6 +106,9 @@ public class Prepare extends javax.swing.JFrame {
         jLabel1.setFont(new Font(jLabel1.getFont().getName(), jLabel1.getFont().getStyle(), (int)(100*set)));
     }//GEN-LAST:event_formComponentResized
 
+    public void setPrepareText(String time){
+        jLabel1.setText(time);
+    }
     /**
      * @param args the command line arguments
      */
@@ -136,4 +150,5 @@ public class Prepare extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
 }
