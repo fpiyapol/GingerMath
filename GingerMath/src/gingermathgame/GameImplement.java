@@ -1,6 +1,12 @@
 package gingermathgame;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +24,10 @@ public class GameImplement{
     private Timer timer;
     private Prepare pp;
     private JFrame parentFrame;
+    private boolean multiChk;
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
     
     public GameImplement() {
         timer = new Timer();
@@ -44,6 +54,10 @@ public class GameImplement{
         return num2.get(no);
     }
     
+    public boolean getMultiChk(){
+        return multiChk;
+    }
+    
     public void setParentFrame(JFrame parentFrame){
         timer.setPrentFrame(parentFrame);
         this.parentFrame = parentFrame;
@@ -53,16 +67,14 @@ public class GameImplement{
         timer.setTimerLabel(timeLabel);
     }
     
-    public void setAnswerField(JTextField answerField){
-        timer.setTextField(answerField);
+    
+    //for Quick Play only
+    public void setTimeoutDialog(JDialog timeoutDialog, JTextField answerField, JLabel scoreShowLabel){
+        timer.setTimeOutDialog(timeoutDialog, answerField, scoreShowLabel);
     }
     
-    public void setTimeoutDialog(JDialog timeoutDialog){
-        timer.setTimeOutDialog(timeoutDialog);
-    }
-    
-    public void setScoreShowLabel(JLabel scoreShowLabel){
-        timer.setShowScoreLabel(scoreShowLabel);
+    public void setTimeoutMulti(){
+        
     }
     
     public void setStatus(Boolean pauseFlag, Boolean playerExitFlag){
@@ -76,10 +88,29 @@ public class GameImplement{
             no++;
             score++;
             timer.setScore(score);
+            if(multiChk){
+                out.println("score "+score);
+            }
             return true;
         }else{
             return false;
         }
+    }
+    
+    public void setNum1(ArrayList num1){
+        this.num1 = num1;
+    }
+    
+    public void setNum2(ArrayList num2){
+        this.num2 = num2;
+    }
+    
+    public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
+        System.out.println("GameImplement set socket.");
+        this.socket = socket;
+        this.in = in;
+        this.out = out;
+        multiChk = true;
     }
     
     public void start(){
@@ -110,5 +141,24 @@ public class GameImplement{
             }
         });
         t.start();
+        
+        if(multiChk){
+            new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        String data = in.readLine();
+                        String[] info = data.split(", ");
+                        System.out.println(info.toString());
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameImplement.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+            }
+        }
+        ).start();
+        }
     }
 }

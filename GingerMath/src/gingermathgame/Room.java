@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -23,6 +24,9 @@ public class Room extends javax.swing.JFrame {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private ArrayList<Integer> num1;
+    private ArrayList<Integer> num2;
+    private boolean updateRoomFlag = true;
     /**
      * Creates new form Room
      */
@@ -41,6 +45,7 @@ public class Room extends javax.swing.JFrame {
                         if(in != null){
                             String datain = in.readLine();
                             String[] dt = datain.split(" ");
+                            System.out.println("datain" + datain);
                             if(dt[0].equals("lp")){
                                 String players = dt[1];
                                 DefaultListModel<String> allPlayersName = new DefaultListModel<>();
@@ -50,12 +55,26 @@ public class Room extends javax.swing.JFrame {
                                 }
                                 playerList.setModel(allPlayersName);
                             }else if(dt[0].equals("st")){
+                                
+                                num1 = new ArrayList<>();
+                                num2 = new ArrayList<>();
+                                for(int j=0; j<40; j++){
+                                    num1.add(Integer.parseInt(in.readLine()));
+                                }
+                                for(int j=0; j<40; j++){
+                                    num2.add(Integer.parseInt(in.readLine()));
+                                }
+                                
+                                
                                 System.out.println("let's play !!!!!!!!!!!!!!!!!!!!!!!!");
                                 GameImplement game = new GameImplement();
+                                game.setSocket(socket, in, out);
+                                game.setNum1(num1);
+                                game.setNum2(num2);
                                 GamePlayScreen gameGUI = new GamePlayScreen(game);
                                 setAlwaysOnTop(true);
                                 gameGUI.setSize(getSize());
-//                                gameGUI.setLocationRelativeTo(this);
+                                gameGUI.setLocationRelativeTo(null);
                                 gameGUI.setVisible(true);
                                 dispose();
                                 
@@ -84,7 +103,7 @@ public class Room extends javax.swing.JFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while(updateRoomFlag){
                     try {
                         out.println("ru " + roomName.getText());
                         Thread.sleep(2000);
@@ -235,6 +254,7 @@ public class Room extends javax.swing.JFrame {
     }//GEN-LAST:event_btKickActionPerformed
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
+        updateRoomFlag = false;
         out.println("st -");
     }//GEN-LAST:event_btStartActionPerformed
 
