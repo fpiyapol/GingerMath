@@ -22,13 +22,12 @@ public class MainMenu extends javax.swing.JFrame{
     private BufferedReader in;
     private PrintWriter out;
     private PlayerInformation playerInfo;
+    private SettingInformation setting;
+    private boolean soundChk = true;
 
-    /**
-     * Creates new form MainMenu
-     */
+    
     public MainMenu() {
         initComponents();
-//        setAlwaysOnTop(true);
 
         setLocationRelativeTo(null);
         setSize(854, 480);
@@ -38,6 +37,10 @@ public class MainMenu extends javax.swing.JFrame{
         jPanel4.setBackground(new Color(0, 0, 0, 0));
         jPanel5.setBackground(new Color(0, 0, 0, 0));
         buttonPanel.setBackground(new Color(0, 0, 0, 0));
+        
+        //#SOUND
+        setting = new SettingInformation();
+        setting.loadSetting();
         
     }
     
@@ -51,7 +54,7 @@ public class MainMenu extends javax.swing.JFrame{
     public void loadPlayerInformation(){
         playerInfo = new PlayerInformation();
         if(playerInfo.loadInformation()){
-            out.println("name " + playerInfo.getName());
+            out.println("oldname " + playerInfo.getName());
         }else{
             while(true){
                 try {
@@ -60,6 +63,7 @@ public class MainMenu extends javax.swing.JFrame{
                     String feedback = in.readLine();
                     if(feedback.equals("acc")){
                         playerInfo.setName(createPlayerName);
+                        playerInfo.saveInfo();
                         JOptionPane.showMessageDialog(null, "Done");
                         break;
                     }else if(feedback.equals("dup")){
@@ -69,6 +73,18 @@ public class MainMenu extends javax.swing.JFrame{
                     Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } 
+        }
+    }
+    
+    // #SOUND for loading presetting propose
+    public void loadSetting(){
+        setting = new SettingInformation();
+        if(setting.loadSetting()){
+            if(setting.getS().equals("OFF")){
+                soundChk = false;
+            }else{
+                soundChk = true;
+            }
         }
     }
     
@@ -287,6 +303,7 @@ public class MainMenu extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        SoundControl.playSound("click.wav");
         double component = getWidth()*getHeight();
         double current = 854*480;
     
@@ -298,7 +315,9 @@ public class MainMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_formComponentResized
 
     private void buttonSettActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSettActionPerformed
-        SettingDialog settingDialog = new SettingDialog(this, true);
+        SoundControl.playSound("click.wav");
+        loadSetting();
+        SettingDialog settingDialog = new SettingDialog(this, true, soundChk);
         String[] result = settingDialog.run();
         if(result != null){
             int width = Integer.parseInt(result[0]);
@@ -311,10 +330,12 @@ public class MainMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_buttonSettActionPerformed
 
     private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
+        SoundControl.playSound("click.wav");
         System.exit(0);
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonQuickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonQuickActionPerformed
+        SoundControl.playSound("click.wav");
         GameImplement game = new GameImplement();
         GamePlayScreen gameGUI = new GamePlayScreen(game);
         setAlwaysOnTop(true);
@@ -325,6 +346,7 @@ public class MainMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_buttonQuickActionPerformed
 
     private void buttonMultiplayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMultiplayerActionPerformed
+        SoundControl.playSound("click.wav");
         Lobby lobby = new Lobby();
         lobby.setName(playerInfo.getName());
         lobby.setSocket(socket, in, out);

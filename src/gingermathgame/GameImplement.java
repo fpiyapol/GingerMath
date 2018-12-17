@@ -76,11 +76,15 @@ public class GameImplement{
     
     //for Quick Play only
     public void setTimeoutDialog(JDialog timeoutDialog, JTextField answerField, JLabel scoreShowLabel){
-        timer.setTimeOutDialog(timeoutDialog, answerField, scoreShowLabel);
+        timer.setTimeOutDialog(timeoutDialog, answerField, scoreShowLabel, multiChk);
     }
     
-    public void setTimeoutMulti(){
-        
+    public void setTimeoutMulti(JDialog timeoutMulti, JTextField answerField){
+        timer.setTimeoutMulti(timeoutMulti, answerField, multiChk);
+    }
+    
+    public void setRankingLabel(JLabel player1, JLabel player2, JLabel player3, JLabel player4){
+        timer.setRankingLabel(player1, player2, player3, player4);
     }
     
     public void setScoreLabel(JTextArea scoreLabel){
@@ -88,8 +92,11 @@ public class GameImplement{
     }
   
     
+    
     public void showLeaderboard(String ldb1, String ldb2, String ldb3, String ldb4){
         String[][] msg2 = {ldb1.split("-"), ldb2.split("-"), ldb3.split("-"), ldb4.split("-")};
+        
+        timer.setScoreRanking(msg2, name);
         
         String[][] player1 = {msg2[0][0].split(":"),  msg2[0][1].split(":")};
         String[][] player2 = {msg2[1][0].split(":"),  msg2[1][1].split(":")};
@@ -98,36 +105,35 @@ public class GameImplement{
         
         String msg = "";
         
-        
         if(player4[0].length==2){
             if(player4[0][1].equals(name)){
-                msg += " >"+player4[0][1] + " : " +player4[1][1].replace("]", "") + " <\n";
+                msg += " > "+player4[0][1] + " : " +player4[1][1].replace("]", "") + " <\n";
             }else{
-               msg += " "+player4[0][1] + " : " + player4[1][1].replace("]", "") + "\n"; 
+               msg += " "+player4[0][1] + " : " + player4[1][1].replace("]", "") + "\n";
             }
         }
         
         if(player3[0].length==2){
             if(player3[0][1].equals(name)){
-                msg += " >"+player3[0][1] + " : " +player3[1][1].replace("]", "") + " <\n";
+                msg += " > "+player3[0][1] + " : " +player3[1][1].replace("]", "") + " <\n";
             }else{
-               msg += " "+player3[0][1] + " : " + player3[1][1].replace("]", "") + "\n"; 
+               msg += " "+player3[0][1] + " : " + player3[1][1].replace("]", "") + "\n";
             }
         }
         
         if(player2[0].length==2){
            if(player2[0][1].equals(name)){
-                msg += " > "+player2[0][1] + " : " +player2[1][1].replace("]", "") + " <\n";
+               msg += " > "+player2[0][1] + " : " +player2[1][1].replace("]", "") + " <\n";
             }else{
-               msg += " "+player2[0][1] + " : " + player2[1][1].replace("]", "") + "\n"; 
+               msg += " "+player2[0][1] + " : " + player2[1][1].replace("]", "") + "\n";
             }
         }
         
         if(player1[0].length==2){
             if(player1[0][1].equals(name)){
-                msg += " >"+player1[0][1] + " : " +player1[1][1].replace("]", "") + " <\n";
+                msg += " > "+player1[0][1] + " : " +player1[1][1].replace("]", "") + " <\n";
             }else{
-               msg += " "+player1[0][1] + " : " + player1[1][1].replace("]", "") + "\n"; 
+               msg += " "+player1[0][1] + " : " + player1[1][1].replace("]", "") + "\n";
             }
         }
         
@@ -171,6 +177,20 @@ public class GameImplement{
         multiChk = true;
     }
     
+    public Socket getSocket(){
+        return socket;
+    }
+    
+    public BufferedReader getIn(){
+        return in;
+    }
+    
+    public PrintWriter getOut(){
+        return out;
+    }
+    
+
+    
     public void start(){
         if(num1 == null && num2 == null){
             num1 = new ArrayList<>();
@@ -184,12 +204,17 @@ public class GameImplement{
             public void run() {
                 try {
                     Prepare pp = new Prepare(parentFrame);
+                    SoundControl.playSound("beep.wav");
                     Thread.sleep(1000);
                     pp.setPrepareText("2");
+                    SoundControl.playSound("beep.wav");
                     Thread.sleep(1000);
                     pp.setPrepareText("1");
+                    SoundControl.playSound("beep.wav");
                     Thread.sleep(1000);
                     pp.setPrepareText("START");
+                    SoundControl.playSound("beep.wav");
+                    SoundControl.playSound("beep.wav");
                     Thread.sleep(400);
                     pp.dispose();
                     new Thread(timer).start();
@@ -204,17 +229,16 @@ public class GameImplement{
             new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(GameImplement.class.getName()).log(Level.SEVERE, null, ex);
-                }
                 while(true){
                     try {
-                        String data = in.readLine();
-                        String[] info = data.split(", ");
-                        String[] ldb = info[0].split(" ");
-                        showLeaderboard(ldb[0], ldb[1], ldb[2], ldb[3]);
+                        String data = in.readLine(); 
+                        if(data.startsWith("[")){;
+                            System.out.println(" data in "+data);
+                            String[] info = data.split(", ");
+                            String[] ldb = info[0].split(" ");
+                            showLeaderboard(ldb[0], ldb[1], ldb[2], ldb[3]);
+                        }
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(GameImplement.class.getName()).log(Level.SEVERE, null, ex);
                     }

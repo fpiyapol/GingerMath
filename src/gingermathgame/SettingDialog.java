@@ -7,7 +7,14 @@ package gingermathgame;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -20,17 +27,26 @@ public class SettingDialog extends javax.swing.JDialog {
      */
     
     private String[] screenSize;
-    private boolean soundChk;
     
-    public SettingDialog(java.awt.Frame parent, boolean modal) {
+    public SettingDialog(java.awt.Frame parent, boolean modal, boolean soundChk) {
         super(parent, modal);
         initComponents();
         
-        if(!soundChk){
+        if (soundChk){
+            soundToggle.setBackground(new Color(255, 180, 30));
+            soundToggle.setSelected(true);
+            soundToggle.setText("ON");
+            System.out.println("input is on");
+        }else{
             soundToggle.setBackground(new Color(100, 108, 119));
             soundToggle.setText("OFF");
+            soundToggle.setSelected(false);
+            System.out.println("input is off");
         }
         
+        
+//        SettingInformation setting = new SettingInformation();
+//        System.out.println(setting.getS());
         
         setBackground(new Color(0,0,0,70));
         setSize(parent.getSize());
@@ -41,6 +57,7 @@ public class SettingDialog extends javax.swing.JDialog {
         jPanel3.setBackground(new Color(0, 0, 0, 0));
         jPanel4.setBackground(new Color(0, 0, 0, 0));
         jPanel5.setBackground(new Color(0, 0, 0, 0));
+        
     }
 
     /**
@@ -279,34 +296,38 @@ public class SettingDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_formComponentResized
 
     private void applyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtActionPerformed
+        SoundControl.playSound("click.wav");
         String item = (String)box.getSelectedItem();
         item = item.trim();
         String[] parts = item.split(" x ");
         screenSize = parts;
+        System.out.println(soundToggle.getText());
+        SettingInformation.saveSetting(soundToggle.getText());
         dispose();
         this.setVisible(false);
     }//GEN-LAST:event_applyBtActionPerformed
 
     private void closeBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtActionPerformed
+        SoundControl.playSound("click.wav");
         dispose();
         this.setVisible(false);
     }//GEN-LAST:event_closeBtActionPerformed
 
     private void soundToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundToggleActionPerformed
         // Should add state to use it properly
-        if(soundToggle.isSelected()){
-            soundToggle.setBackground(new Color(100, 108, 119));
-            soundToggle.setText("OFF");
-        }else{
+        System.out.println("clicked : " + evt.getActionCommand());
+        if (soundToggle.isSelected()){
+            SoundControl.playSound("click.wav");
             soundToggle.setBackground(new Color(255, 180, 30));
             soundToggle.setText("ON");
+        }else{
+            SoundControl.playSound("click.wav");
+            soundToggle.setBackground(new Color(100, 108, 119));
+            soundToggle.setText("OFF");
         }
+
     }//GEN-LAST:event_soundToggleActionPerformed
-    
-    public boolean getSoundChk(){
-        return soundChk;
-    }
-     
+   
     public String[] run(){
         this.setVisible(true);
         return screenSize;
@@ -345,11 +366,19 @@ public class SettingDialog extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SettingDialog dialog = new SettingDialog(new javax.swing.JFrame(), true);
+                SettingDialog dialog = new SettingDialog(new javax.swing.JFrame(), true, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -360,7 +389,7 @@ public class SettingDialog extends javax.swing.JDialog {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyBt;
     private javax.swing.JComboBox<String> box;

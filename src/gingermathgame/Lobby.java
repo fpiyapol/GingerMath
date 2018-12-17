@@ -241,6 +241,7 @@ public class Lobby extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
+        SoundControl.playSound("click.wav");
         try {
             out.println("on -");
             listRooms = new DefaultListModel<>();
@@ -256,6 +257,7 @@ public class Lobby extends javax.swing.JFrame {
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void btJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJoinActionPerformed
+        SoundControl.playSound("click.wav");
         String getRoomName = listOfRooms.getSelectedValue();
         System.out.println(getRoomName);
         lobbyFlag = false;
@@ -273,6 +275,7 @@ public class Lobby extends javax.swing.JFrame {
     }//GEN-LAST:event_btJoinActionPerformed
 
     private void btCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateActionPerformed
+        SoundControl.playSound("click.wav");
         String createRoomName = (String)JOptionPane.showInputDialog(null, "Create room : ", "Create Room", JOptionPane.PLAIN_MESSAGE, null, null, "room_name");
         if(createRoomName != null && createRoomName.length() > 0){
             System.out.println(createRoomName);
@@ -293,9 +296,11 @@ public class Lobby extends javax.swing.JFrame {
     }//GEN-LAST:event_btCreateActionPerformed
 
     private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
+        SoundControl.playSound("click.wav");
         MainMenu mm = new MainMenu();
         mm.setSocket(socket, in, out);
         mm.setSize(getSize());
+        mm.setLocationRelativeTo(this);
         mm.setVisible(true);
         dispose();
     }//GEN-LAST:event_btBackActionPerformed

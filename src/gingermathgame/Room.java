@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +29,8 @@ public class Room extends javax.swing.JFrame {
     private ArrayList<Integer> num2;
     private boolean updateRoomFlag = true;
     private String name;
+    private boolean isPlay = true;
+    private Room room;
     
     /**
      * Creates new form Room
@@ -38,6 +41,8 @@ public class Room extends javax.swing.JFrame {
         jPanel1.setBackground(new Color(0, 0, 0, 0));
         btStart.setEnabled(false);
         btKick.setEnabled(false);
+        
+        room = this;
         
         new Thread(new Runnable() {
             @Override
@@ -68,6 +73,7 @@ public class Room extends javax.swing.JFrame {
                                     num2.add(n);
                                 }
                                 
+                                
                                 System.out.println("let's play !!!!!!!!!!!!!!!!!!!!!!!!");
                                 GameImplement game = new GameImplement();
                                 game.setName(name);
@@ -76,6 +82,7 @@ public class Room extends javax.swing.JFrame {
                                 game.setNum2(num2);
                                 GamePlayScreen gameGUI = new GamePlayScreen(game);
                                 setAlwaysOnTop(true);
+                                gameGUI.setRoom(room);
                                 gameGUI.setSize(getSize());
                                 gameGUI.setLocationRelativeTo(null);
                                 gameGUI.setVisible(true);
@@ -83,6 +90,18 @@ public class Room extends javax.swing.JFrame {
                                 
                             }else if(dt[0].equals("ps")){
                                 updateRoomFlag = false;
+                            }else if(dt[0].equals("kc")){
+                                // เมื่อได้รับคำว่า kc เข้ามา warning dialog ว่ามีเตะ แล้วก็ทำแบบุ่ม back;
+                                JOptionPane.showMessageDialog(null, "You Know What? You were kicked", "Warning", JOptionPane.WARNING_MESSAGE);
+                                out.println("bk -");
+                                Lobby lobby = new Lobby();
+                                lobby.setSocket(socket, in, out);
+                                lobby.setListRoom();
+                                setAlwaysOnTop(true);
+                                lobby.setSize(getSize());
+                                lobby.setLocationRelativeTo(null);
+                                lobby.setVisible(true);
+                                dispose();
                             }
                                 
                         }
@@ -97,6 +116,10 @@ public class Room extends javax.swing.JFrame {
     public void setRoomName(String roomName){
         this.roomName.setText(roomName);
     }
+    
+//    public void setIsPlay(boolean isPlay){
+//        this.isPlay = isPlay;
+//    }
     
     public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
         this.socket = socket;
@@ -248,6 +271,7 @@ public class Room extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBackToLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackToLobbyActionPerformed
+        SoundControl.playSound("click.wav");
         out.println("bk -");
         Lobby lobby = new Lobby();
         lobby.setSocket(socket, in, out);
@@ -264,7 +288,9 @@ public class Room extends javax.swing.JFrame {
     }//GEN-LAST:event_btKickActionPerformed
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
+        SoundControl.playSound("click.wav");
         updateRoomFlag = false;
+//        isPlay = false;
         out.println("ps -");
         out.println("st -");
     }//GEN-LAST:event_btStartActionPerformed

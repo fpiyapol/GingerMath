@@ -6,9 +6,11 @@
 package gingermathgame;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -36,6 +38,7 @@ public class PlayerInformation {
                 String[] inf = data.split(" ");
                 name = inf[0];
                 score = Integer.parseInt(inf[1]);
+                System.out.println("loaded");
                 return true;
             } catch (FileNotFoundException ex) {
                 System.out.println("load file error : " + ex);
@@ -46,7 +49,6 @@ public class PlayerInformation {
                 return false;
             }
         }else{
-            //file does not exist -- New Player
             return false;
         }
     }
@@ -65,6 +67,18 @@ public class PlayerInformation {
 
     public void setScore(int score) {
         this.score = score;
+    }
+    
+    public void saveInfo(){
+        file = new File("info.txt");
+        try {
+            writer = new PrintWriter(file);
+            writer.println(name+" "+score);
+            writer.flush();
+            System.out.println("OK WITH " + name);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PlayerInformation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

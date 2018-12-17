@@ -18,7 +18,8 @@ public class GamePlayScreen extends javax.swing.JFrame {
     
     private static GameImplement game;
     private Prepare pre;
-    private boolean multiChk = true;
+    private boolean multiChk;
+    private Room room;
             
     public GamePlayScreen() {
 //       initComponents();
@@ -32,18 +33,20 @@ public class GamePlayScreen extends javax.swing.JFrame {
         answerField.setBackground(new Color(0, 0, 0, 10));
         timeLabel.setText("");
         
-        
+        multiChk = game.getMultiChk();
         this.game = game;
         game.setParentFrame(this);
         game.setTimeLabel(timeLabel);
         game.setScoreLabel(scoreLabel);
         
         
-//        if(game.getMultiChk()){
-////            game.setTimeoutMulti(timeoutMulti, answerField);
-//        }else{
+        if(multiChk){
+            System.out.println("----IS ONLINE----");
+            game.setTimeoutMulti(timeoutMulti, answerField);
+            game.setRankingLabel(tomPlayer1, tomPlayer2, tomPlayer3, tomPlayer4);
+        }else{
             game.setTimeoutDialog(timeoutDialog, answerField, todscoreShowLabel);
-//        }
+         }
         
         
         game.setStatus(false, false); // 1st is Pause Activate 2nd is Exit
@@ -442,6 +445,11 @@ public class GamePlayScreen extends javax.swing.JFrame {
         );
 
         timeoutMulti.setUndecorated(true);
+        timeoutMulti.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                timeoutMultiComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout tomPanelLeftLayout = new javax.swing.GroupLayout(tomPanelLeft);
         tomPanelLeft.setLayout(tomPanelLeftLayout);
@@ -495,26 +503,28 @@ public class GamePlayScreen extends javax.swing.JFrame {
         tomPlayer1.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
         tomPlayer1.setForeground(new java.awt.Color(255, 255, 255));
         tomPlayer1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tomPlayer1.setText("jLabel2");
 
         tomPlayer2.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
         tomPlayer2.setForeground(new java.awt.Color(255, 255, 255));
         tomPlayer2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tomPlayer2.setText("jLabel3");
 
         tomPlayer3.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
         tomPlayer3.setForeground(new java.awt.Color(255, 255, 255));
         tomPlayer3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tomPlayer3.setText("jLabel4");
 
         tomPlayer4.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
         tomPlayer4.setForeground(new java.awt.Color(255, 255, 255));
         tomPlayer4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tomPlayer4.setText("jLabel5");
 
+        tomBackRoomBt.setBackground(new java.awt.Color(204, 0, 255));
         tomBackRoomBt.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
         tomBackRoomBt.setForeground(new java.awt.Color(255, 255, 255));
         tomBackRoomBt.setText(" Back to Your Room ");
+        tomBackRoomBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tomBackRoomBtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tomPanelCenterLayout = new javax.swing.GroupLayout(tomPanelCenter);
         tomPanelCenter.setLayout(tomPanelCenterLayout);
@@ -725,34 +735,23 @@ public class GamePlayScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_gradientPanel1ComponentResized
 
     private void answerFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_answerFieldKeyPressed
-//        if(evt.getKeyCode()==KeyEvent.VK_ESCAPE){
-//            game.setStatus(true, false);
-//            int n = JOptionPane.showConfirmDialog(null, "Back to Main Manu? Really??", "Game Pause", JOptionPane.YES_NO_OPTION);
-//            if(n == 0){
-//                MainMenu main = new MainMenu();
-//                setAlwaysOnTop(true);
-//                main.setSize(getSize());
-//                main.setLocationRelativeTo(this);
-//                main.setVisible(true);
-//                game.setStatus(false, true);
-//                dispose();
-//                //try to discontinue game
-//            }else{
-//                game.setStatus(false, false);
-//            }
-//        }
-        if(evt.getKeyCode()==KeyEvent.VK_ESCAPE){
+
+        if(evt.getKeyCode()==KeyEvent.VK_ESCAPE && !multiChk){
+            SoundControl.playSound("click.wav");
             game.setStatus(true, false);
             pauseDialog.setSize(this.getSize());
             pauseDialog.setLocationRelativeTo(this);
             pauseDialog.setVisible(true);
-        }      
+        }else if(evt.getKeyCode()==KeyEvent.VK_ESCAPE && multiChk){
+            //additional sound
+        }
     }//GEN-LAST:event_answerFieldKeyPressed
 
     private void answerFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answerFieldActionPerformed
         try{
             int res = Integer.parseInt(answerField.getText());
             if(game.check(res)){
+                SoundControl.playSound("correct.wav");
                 if(!multiChk){
                     scoreLabel.setText("  Score : " + game.getScore());
                 }
@@ -760,9 +759,11 @@ public class GamePlayScreen extends javax.swing.JFrame {
                 answerField.setBackground(new Color(0, 0, 0, 10));
                 problemLabel.setText(game.getProblem1() + " + " + game.getProblem2());
             }else{
+                SoundControl.playSound("wrong.wav");
                 answerField.setBackground(new Color(253, 66, 26, 90));
             }
         }catch(NumberFormatException ex){
+            SoundControl.playSound("wrong.wav");
             answerField.setBackground(new Color(253, 66, 26, 90));
         }
         
@@ -782,6 +783,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_timeoutDialogComponentResized
 
     private void todbackBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todbackBtActionPerformed
+        SoundControl.playSound("click.wav");
         timeoutDialog.dispose();
         timeoutDialog.setVisible(false);
         MainMenu main = new MainMenu();
@@ -793,6 +795,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_todbackBtActionPerformed
 
     private void pdExitBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdExitBtActionPerformed
+        SoundControl.playSound("click.wav");
         MainMenu main = new MainMenu();
         setAlwaysOnTop(true);
         main.setSize(getSize());
@@ -804,6 +807,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_pdExitBtActionPerformed
 
     private void pdContinueBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdContinueBtActionPerformed
+        SoundControl.playSound("click.wav");
         pauseDialog.dispose();
         game.setStatus(false, false);
     }//GEN-LAST:event_pdContinueBtActionPerformed
@@ -820,6 +824,34 @@ public class GamePlayScreen extends javax.swing.JFrame {
         pdExitBt.setFont(new Font(pdExitBt.getFont().getName(), pdExitBt.getFont().getStyle(), (int)(18*(size))));
 
     }//GEN-LAST:event_pauseDialogComponentResized
+
+    private void timeoutMultiComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_timeoutMultiComponentResized
+        double component = getWidth()*getHeight();
+        double current = 854*480;
+        double size = Math.log(component / current) + 1;
+        
+        tomTimeoutLabel.setFont(new Font(tomTimeoutLabel.getFont().getName(), tomTimeoutLabel.getFont().getStyle(), (int)(64*(size))));
+        tomPlayer1.setFont(new Font(tomPlayer1.getFont().getName(), tomPlayer1.getFont().getStyle(), (int)(24*(size))));
+        tomPlayer2.setFont(new Font(tomPlayer2.getFont().getName(), tomPlayer2.getFont().getStyle(), (int)(24*(size))));
+        tomPlayer3.setFont(new Font(tomPlayer3.getFont().getName(), tomPlayer3.getFont().getStyle(), (int)(24*(size))));
+        tomPlayer4.setFont(new Font(tomPlayer4.getFont().getName(), tomPlayer4.getFont().getStyle(), (int)(24*(size))));
+    }//GEN-LAST:event_timeoutMultiComponentResized
+
+    public void setRoom(Room room){
+        this.room = room;
+    }
+    
+    private void tomBackRoomBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomBackRoomBtActionPerformed
+//        room.setVisible(true);
+//        room.setIsPlay(true);
+        SoundControl.playSound("click.wav");
+        MainMenu mm = new MainMenu();
+        mm.setSocket(game.getSocket(), game.getIn(), game.getOut());
+        mm.setSize(getSize());
+        mm.setLocationRelativeTo(this);
+        mm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_tomBackRoomBtActionPerformed
     
     
     
