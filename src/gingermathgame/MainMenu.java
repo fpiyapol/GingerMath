@@ -326,6 +326,7 @@ public class MainMenu extends javax.swing.JFrame{
 
     private void buttonMultiplayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMultiplayerActionPerformed
         Lobby lobby = new Lobby();
+        lobby.setName(playerInfo.getName());
         lobby.setSocket(socket, in, out);
         lobby.setListRoom();
         setAlwaysOnTop(true);

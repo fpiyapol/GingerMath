@@ -27,6 +27,7 @@ public class Lobby extends javax.swing.JFrame {
     private PrintWriter out;
     private DefaultListModel<String> listRooms;
     private boolean lobbyFlag = true;
+    private String name;
 
     /**
      * Creates new form Lobby
@@ -43,6 +44,10 @@ public class Lobby extends javax.swing.JFrame {
             this.socket = socket;
             this.in = in;
             this.out = out;
+    }
+    
+    public void setName(String name){
+        this.name = name;
     }
     
     public void setListRoom(){
@@ -257,6 +262,7 @@ public class Lobby extends javax.swing.JFrame {
         out.println("jn " + getRoomName);
         Room room = new Room();
         room.setRoomName(getRoomName);
+        room.setName(name);
         room.setSocket(socket, in, out);
         room.updateRoom();
         setAlwaysOnTop(true);
@@ -273,6 +279,7 @@ public class Lobby extends javax.swing.JFrame {
             lobbyFlag = false;
             out.println("cr " + createRoomName);
             Room room = new Room();
+            room.setName(name);
             room.setHost();
             room.setRoomName(createRoomName);
             room.setSocket(socket, in, out);

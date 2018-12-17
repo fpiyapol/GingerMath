@@ -18,7 +18,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
     
     private static GameImplement game;
     private Prepare pre;
-    private boolean multiChk;
+    private boolean multiChk = true;
             
     public GamePlayScreen() {
 //       initComponents();
@@ -36,6 +36,8 @@ public class GamePlayScreen extends javax.swing.JFrame {
         this.game = game;
         game.setParentFrame(this);
         game.setTimeLabel(timeLabel);
+        game.setScoreLabel(scoreLabel);
+        
         
 //        if(game.getMultiChk()){
 ////            game.setTimeoutMulti(timeoutMulti, answerField);
@@ -751,10 +753,9 @@ public class GamePlayScreen extends javax.swing.JFrame {
         try{
             int res = Integer.parseInt(answerField.getText());
             if(game.check(res)){
-                scoreLabel.setText("  Score : " + game.getScore());
-                scoreLabel.append("\n  Score : 1");
-                scoreLabel.append("\n  Score : 2");
-                scoreLabel.append("\n  Score : 3");
+                if(!multiChk){
+                    scoreLabel.setText("  Score : " + game.getScore());
+                }
                 answerField.setText("");
                 answerField.setBackground(new Color(0, 0, 0, 10));
                 problemLabel.setText(game.getProblem1() + " + " + game.getProblem2());
@@ -820,7 +821,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
 
     }//GEN-LAST:event_pauseDialogComponentResized
     
-
+    
     
     /**
      * @param args the command line arguments

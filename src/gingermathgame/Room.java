@@ -27,6 +27,8 @@ public class Room extends javax.swing.JFrame {
     private ArrayList<Integer> num1;
     private ArrayList<Integer> num2;
     private boolean updateRoomFlag = true;
+    private String name;
+    
     /**
      * Creates new form Room
      */
@@ -45,7 +47,6 @@ public class Room extends javax.swing.JFrame {
                         if(in != null){
                             String datain = in.readLine();
                             String[] dt = datain.split(" ");
-                            System.out.println("datain : " + datain);
                             if(dt[0].equals("lp")){
                                 String players = dt[1];
                                 DefaultListModel<String> allPlayersName = new DefaultListModel<>();
@@ -69,6 +70,7 @@ public class Room extends javax.swing.JFrame {
                                 
                                 System.out.println("let's play !!!!!!!!!!!!!!!!!!!!!!!!");
                                 GameImplement game = new GameImplement();
+                                game.setName(name);
                                 game.setSocket(socket, in, out);
                                 game.setNum1(num1);
                                 game.setNum2(num2);
@@ -100,6 +102,10 @@ public class Room extends javax.swing.JFrame {
         this.socket = socket;
         this.in = in;
         this.out = out;
+    }
+    
+    public void setName(String name){
+        this.name = name;
     }
     
     public void updateRoom(){

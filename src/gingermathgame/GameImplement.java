@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class GameImplement{
@@ -28,6 +29,8 @@ public class GameImplement{
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private JTextArea scoreLabel;
+    private String name;
     
     public GameImplement() {
         timer = new Timer();
@@ -67,6 +70,9 @@ public class GameImplement{
         timer.setTimerLabel(timeLabel);
     }
     
+    public void setName(String name){
+        this.name = name;
+    }
     
     //for Quick Play only
     public void setTimeoutDialog(JDialog timeoutDialog, JTextField answerField, JLabel scoreShowLabel){
@@ -74,6 +80,58 @@ public class GameImplement{
     }
     
     public void setTimeoutMulti(){
+        
+    }
+    
+    public void setScoreLabel(JTextArea scoreLabel){
+        this.scoreLabel = scoreLabel;
+    }
+  
+    
+    public void showLeaderboard(String ldb1, String ldb2, String ldb3, String ldb4){
+        String[][] msg2 = {ldb1.split("-"), ldb2.split("-"), ldb3.split("-"), ldb4.split("-")};
+        
+        String[][] player1 = {msg2[0][0].split(":"),  msg2[0][1].split(":")};
+        String[][] player2 = {msg2[1][0].split(":"),  msg2[1][1].split(":")};
+        String[][] player3 = {msg2[2][0].split(":"),  msg2[2][1].split(":")};
+        String[][] player4 = {msg2[3][0].split(":"),  msg2[3][1].split(":")};
+        
+        String msg = "";
+        
+        
+        if(player4[0].length==2){
+            if(player4[0][1].equals(name)){
+                msg += " >"+player4[0][1] + " : " +player4[1][1].replace("]", "") + " <\n";
+            }else{
+               msg += " "+player4[0][1] + " : " + player4[1][1].replace("]", "") + "\n"; 
+            }
+        }
+        
+        if(player3[0].length==2){
+            if(player3[0][1].equals(name)){
+                msg += " >"+player3[0][1] + " : " +player3[1][1].replace("]", "") + " <\n";
+            }else{
+               msg += " "+player3[0][1] + " : " + player3[1][1].replace("]", "") + "\n"; 
+            }
+        }
+        
+        if(player2[0].length==2){
+           if(player2[0][1].equals(name)){
+                msg += " > "+player2[0][1] + " : " +player2[1][1].replace("]", "") + " <\n";
+            }else{
+               msg += " "+player2[0][1] + " : " + player2[1][1].replace("]", "") + "\n"; 
+            }
+        }
+        
+        if(player1[0].length==2){
+            if(player1[0][1].equals(name)){
+                msg += " >"+player1[0][1] + " : " +player1[1][1].replace("]", "") + " <\n";
+            }else{
+               msg += " "+player1[0][1] + " : " + player1[1][1].replace("]", "") + "\n"; 
+            }
+        }
+        
+        scoreLabel.setText(msg);
         
     }
     
@@ -146,14 +204,17 @@ public class GameImplement{
             new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GameImplement.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 while(true){
                     try {
                         String data = in.readLine();
                         String[] info = data.split(", ");
-                        String[] ldb = info[0].split("-");
-                        System.out.println("1 "+ ldb[0]);
-                        
-//                        System.out.println("info"+info[0]+info[1]);
+                        String[] ldb = info[0].split(" ");
+                        showLeaderboard(ldb[0], ldb[1], ldb[2], ldb[3]);
                     } catch (IOException ex) {
                         Logger.getLogger(GameImplement.class.getName()).log(Level.SEVERE, null, ex);
                     }
