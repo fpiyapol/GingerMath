@@ -13,7 +13,7 @@
 
 <br>
 
-# <img src="img/pc.png" width="30">  System Requirment
+# <img src="img/pc.png" width="30">  System Requirement
 * Java 10 or greater
 
 <br>
