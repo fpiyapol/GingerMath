@@ -21,7 +21,8 @@
 # <img src="img/play.png" width="30"> How to play
 
 - Installation - ขั้นตอนการติดตั้ง
-  - เริ่มต้นที่การติดตั้งแอพพลิเคชั่น GingerMath ง่ายๆ ด้วยการดาวน์โหลดไฟล์ .jar
+  - เริ่มต้นที่การติดตั้งแอพพลิเคชั่น GingerMath ง่ายๆ ด้วยการ[ดาวน์โหลดไฟล์ GingerMathPack.zip ](https://github.com/oop-it-kmitl-61/GingerMath/blob/master/GingerMathPack.zip)
+  - ทำการแตกไฟล์
   - เริ่มเล่นเกมด้วยการรันไฟล์ GingerMathGame.jar
 
 * Let's get started - เริ่มต้นการใช้งาน
@@ -65,7 +66,7 @@
 <br>
 
 # <img src="img/advance.png" width="30"> For Advance User
-&nbsp;&nbsp;&nbsp;&nbsp; สำหรับผู้ใช้ที่ที่ต้องการจะเปิดเซิฟเวอร์เกมบนเซิฟเวอร์ของตัวเองให้ทำการรันไฟล์ GingerMath_Server.jar ตามด้วย IP Address ของคุณ
+&nbsp;&nbsp;&nbsp;&nbsp; สำหรับผู้ใช้ที่ที่ต้องการจะเปิดเซิฟเวอร์เกมบนเซิฟเวอร์ของตัวเองให้ทำการรันไฟล์ [GingerMath_Server.jar](https://github.com/oop-it-kmitl-61/GingerMath/tree/master/server) ตามด้วย IP Address ของคุณ
 
 ```
 java -jar GingerMath_Server.jar xx.xx.xx.xx
