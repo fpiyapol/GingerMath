@@ -31,6 +31,7 @@ public class Room extends javax.swing.JFrame {
     private String name;
     private boolean isPlay = true;
     private Room room;
+    private DefaultListModel<String> allPlayersName;
     
     /**
      * Creates new form Room
@@ -54,12 +55,16 @@ public class Room extends javax.swing.JFrame {
                             String[] dt = datain.split(" ");
                             if(dt[0].equals("lp")){
                                 String players = dt[1];
-                                DefaultListModel<String> allPlayersName = new DefaultListModel<>();
-
+                                allPlayersName = new DefaultListModel<>();
+                                
                                 for(String name:players.split("-")){
                                     allPlayersName.addElement(name);
                                 }
+                                if(allPlayersName.size() == 1){
+                                    btKick.setEnabled(false);
+                                }                    
                                 playerList.setModel(allPlayersName);
+                                
                             }else if(dt[0].equals("st")){
                                 System.out.println("cmd st");
                                 num1 = new ArrayList<>();
@@ -87,6 +92,7 @@ public class Room extends javax.swing.JFrame {
                                 gameGUI.setLocationRelativeTo(null);
                                 gameGUI.setVisible(true);
                                 dispose();
+                                break;
                                 
                             }else if(dt[0].equals("ps")){
                                 updateRoomFlag = false;
@@ -102,6 +108,7 @@ public class Room extends javax.swing.JFrame {
                                 lobby.setLocationRelativeTo(null);
                                 lobby.setVisible(true);
                                 dispose();
+                                break;
                             }
                                 
                         }
@@ -284,15 +291,21 @@ public class Room extends javax.swing.JFrame {
     }//GEN-LAST:event_btBackToLobbyActionPerformed
 
     private void btKickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btKickActionPerformed
-        // TODO add your handling code here:
+        SoundControl.playSound("click.wav");
+        out.println("kc " + playerList.getSelectedValue());
     }//GEN-LAST:event_btKickActionPerformed
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
         SoundControl.playSound("click.wav");
-        updateRoomFlag = false;
+        if(allPlayersName.size() == 1){
+            JOptionPane.showMessageDialog(null, "Waiting for another players..", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            updateRoomFlag = false;
 //        isPlay = false;
-        out.println("ps -");
-        out.println("st -");
+            out.println("ps -");
+            out.println("st -");
+        }
+        
     }//GEN-LAST:event_btStartActionPerformed
 
     /**
