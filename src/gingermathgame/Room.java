@@ -32,6 +32,7 @@ public class Room extends javax.swing.JFrame {
     private boolean isPlay = true;
     private Room room;
     private DefaultListModel<String> allPlayersName;
+    private boolean flag = true;
     
     /**
      * Creates new form Room
@@ -48,7 +49,7 @@ public class Room extends javax.swing.JFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while(flag){
                     try {
                         if(in != null){
                             String datain = in.readLine();
@@ -85,6 +86,7 @@ public class Room extends javax.swing.JFrame {
                                 game.setSocket(socket, in, out);
                                 game.setNum1(num1);
                                 game.setNum2(num2);
+                                game.setOnline(true);
                                 GamePlayScreen gameGUI = new GamePlayScreen(game);
                                 setAlwaysOnTop(true);
                                 gameGUI.setRoom(room);
@@ -280,6 +282,7 @@ public class Room extends javax.swing.JFrame {
     private void btBackToLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackToLobbyActionPerformed
         SoundControl.playSound("click.wav");
         updateRoomFlag = false;
+        flag = false;
         out.println("bk -");
         Lobby lobby = new Lobby();
         lobby.setSocket(socket, in, out);

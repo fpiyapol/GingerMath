@@ -125,7 +125,7 @@ public class GameImplement{
         if(player3[0].length==2){
             if(player3[0][1].equals(name)){
                 msg += " > "+player3[0][1] + " : " +player3[1][1].replace("]", "") + " <\n";
-                playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
+                playerScore = Integer.parseInt(player3[1][1].replace("]", ""));
             }else{
                msg += " "+player3[0][1] + " : " + player3[1][1].replace("]", "") + "\n";
             }
@@ -134,7 +134,7 @@ public class GameImplement{
         if(player2[0].length==2){
            if(player2[0][1].equals(name)){
                msg += " > "+player2[0][1] + " : " +player2[1][1].replace("]", "") + " <\n";
-               playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
+               playerScore = Integer.parseInt(player2[1][1].replace("]", ""));
             }else{
                msg += " "+player2[0][1] + " : " + player2[1][1].replace("]", "") + "\n";
             }
@@ -143,7 +143,7 @@ public class GameImplement{
         if(player1[0].length==2){
             if(player1[0][1].equals(name)){
                 msg += " > "+player1[0][1] + " : " +player1[1][1].replace("]", "") + " <\n";
-                playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
+                playerScore = Integer.parseInt(player1[1][1].replace("]", ""));
             }else{
                msg += " "+player1[0][1] + " : " + player1[1][1].replace("]", "") + "\n";
             }
@@ -186,18 +186,25 @@ public class GameImplement{
         this.socket = socket;
         this.in = in;
         this.out = out;
-        multiChk = true;
+    }
+    
+    public void setOnline(boolean s){
+        multiChk = s;
     }
     
     public Socket getSocket(){
+        System.out.println("re socket");
         return socket;
     }
     
     public BufferedReader getIn(){
+        System.out.println("re in");
         return in;
     }
     
     public PrintWriter getOut(){
+        System.out.println("re out");
+        System.out.println(out == null);
         return out;
     }
     

@@ -42,7 +42,7 @@ public class MainMenu extends javax.swing.JFrame{
         setting = new SettingInformation();
         setting.loadSetting();
         
-        //#profileInfo
+        
         
     }
     
@@ -369,6 +369,7 @@ public class MainMenu extends javax.swing.JFrame{
     private void buttonQuickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonQuickActionPerformed
         SoundControl.playSound("click.wav");
         GameImplement game = new GameImplement();
+        game.setSocket(socket, in, out);
         game.setPlayerInfo(playerInfo);
         GamePlayScreen gameGUI = new GamePlayScreen(game);
         setAlwaysOnTop(true);

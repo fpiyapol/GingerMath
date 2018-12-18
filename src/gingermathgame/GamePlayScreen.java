@@ -775,6 +775,8 @@ public class GamePlayScreen extends javax.swing.JFrame {
         MainMenu main = new MainMenu();
         setAlwaysOnTop(true);
         main.setSize(getSize());
+        main.setSocket(game.getSocket(), game.getIn(), game.getOut());
+        main.loadPlayerInformation();
         main.setLocationRelativeTo(this);
         main.setVisible(true);
         dispose();
@@ -784,6 +786,8 @@ public class GamePlayScreen extends javax.swing.JFrame {
         SoundControl.playSound("click.wav");
         MainMenu main = new MainMenu();
         setAlwaysOnTop(true);
+        main.setSocket(game.getSocket(), game.getIn(), game.getOut());
+        main.loadPlayerInformation();
         main.setSize(getSize());
         main.setLocationRelativeTo(this);
         main.setVisible(true);

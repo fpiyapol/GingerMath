@@ -75,7 +75,7 @@ public class Timer implements Runnable{
             if(player4[0][1].equals(name)){
                 player1Label.setText(" > "+player4[0][1] + "   " +player4[1][1].replace("]", "") +" pt ");
             }else{
-               player1Label.setText(" "+player4[0][1] + "   " +player4[1][1].replace("]", "") +" pt ");
+                player1Label.setText(" "+player4[0][1] + "   " +player4[1][1].replace("]", "") +" pt ");
             }
         }
         

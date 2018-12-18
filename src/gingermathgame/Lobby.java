@@ -60,7 +60,7 @@ public class Lobby extends javax.swing.JFrame {
                         out.println("on -");
                         listRooms = new DefaultListModel<>();
                         String lst = in.readLine();
-                        System.out.println(lst);
+                        System.out.println(" form lobby : " + lst);
                         for(String str:lst.split("-")){
                             listRooms.addElement(str);
                         }
@@ -73,6 +73,7 @@ public class Lobby extends javax.swing.JFrame {
                     }
                     
                 }
+                System.out.println("lobby break");
             }
         }).start();
     }
@@ -297,7 +298,21 @@ public class Lobby extends javax.swing.JFrame {
 
     private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
         SoundControl.playSound("click.wav");
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            socket = new Socket("104.248.154.68", 8910);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         MainMenu mm = new MainMenu();
+        lobbyFlag = false;
         mm.setSocket(socket, in, out);
         mm.loadPlayerInformation();
         mm.setSize(getSize());
