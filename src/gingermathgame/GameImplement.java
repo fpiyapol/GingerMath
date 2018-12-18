@@ -213,8 +213,7 @@ public class GameImplement{
                     SoundControl.playSound("beep.wav");
                     Thread.sleep(1000);
                     pp.setPrepareText("START");
-                    SoundControl.playSound("beep.wav");
-                    SoundControl.playSound("beep.wav");
+                    SoundControl.playSound("moment.wav");
                     Thread.sleep(400);
                     pp.dispose();
                     new Thread(timer).start();

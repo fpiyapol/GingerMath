@@ -137,7 +137,7 @@ public class Timer implements Runnable{
                 if (t == 10){
                     SoundControl.playSound("countdown.wav");
                 }
-                if (t == 1){
+                if (t == 3){
                     SoundControl.playSound("end.wav");
                 }
                 while(pauseFlag){
@@ -153,12 +153,14 @@ public class Timer implements Runnable{
         }
 
         if(!playerExitFlag && !multiChk){
+            SoundControl.playSound("radar.wav");
             answerField.setEditable(false);
             showScoreLabel.setText(" Your Score  "+score);
             timeoutDialog.setSize(parentFrame.getSize());
             timeoutDialog.setLocationRelativeTo(parentFrame);
             timeoutDialog.setVisible(true);
         }else if(!playerExitFlag && multiChk){
+            SoundControl.playSound("radar.wav");
             answerField.setEditable(false);
             showRanking();
             timeoutMulti.setSize(parentFrame.getSize());
