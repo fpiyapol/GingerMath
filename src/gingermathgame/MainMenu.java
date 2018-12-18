@@ -57,7 +57,7 @@ public class MainMenu extends javax.swing.JFrame{
         playerInfo = new PlayerInformation();
         if(playerInfo.loadInformation()){
             out.println("oldname " + playerInfo.getName());
-            profileInfo.setText(playerInfo.getName());
+            jButton1.setText(playerInfo.getName());
         }else{
             while(true){
                 try {
@@ -67,7 +67,7 @@ public class MainMenu extends javax.swing.JFrame{
                     if(feedback.equals("acc")){
                         playerInfo.setName(createPlayerName);
                         playerInfo.saveInfo();
-                        profileInfo.setText(playerInfo.getName());
+                        jButton1.setText(playerInfo.getName());
                         JOptionPane.showMessageDialog(null, "Done");
                         break;
                     }else if(feedback.equals("dup")){
@@ -107,7 +107,7 @@ public class MainMenu extends javax.swing.JFrame{
         gradientPanel1 = new gingermathgame.GradientPanel();
         jPanel1 = new javax.swing.JPanel();
         welcomeText = new javax.swing.JLabel();
-        profileInfo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         labelName = new javax.swing.JLabel();
         buttonPanel = new javax.swing.JPanel();
@@ -141,14 +141,12 @@ public class MainMenu extends javax.swing.JFrame{
         welcomeText.setForeground(new java.awt.Color(255, 255, 255));
         welcomeText.setText("Welcome");
 
-        profileInfo.setBackground(new java.awt.Color(138, 192, 84));
-        profileInfo.setFont(new java.awt.Font("Kanit", 0, 18)); // NOI18N
-        profileInfo.setForeground(new java.awt.Color(255, 255, 255));
-        profileInfo.setContentAreaFilled(false);
-        profileInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        profileInfo.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setBackground(new java.awt.Color(138, 192, 84));
+        jButton1.setFont(new java.awt.Font("Kanit", 2, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                profileInfoActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -156,11 +154,11 @@ public class MainMenu extends javax.swing.JFrame{
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(welcomeText, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(profileInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(welcomeText)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,7 +167,7 @@ public class MainMenu extends javax.swing.JFrame{
                 .addGap(22, 22, 22)
                 .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(profileInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -393,7 +391,7 @@ public class MainMenu extends javax.swing.JFrame{
         dispose();
     }//GEN-LAST:event_buttonMultiplayerActionPerformed
 
-    private void profileInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileInfoActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Profile pf = new Profile(playerInfo, this);
         int score = playerInfo.getScore();
         out.println("upr "+ playerInfo.getName() + "-" + score);
@@ -410,10 +408,7 @@ public class MainMenu extends javax.swing.JFrame{
         } catch (IOException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-    }//GEN-LAST:event_profileInfoActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
        
     
     /**
@@ -462,6 +457,7 @@ public class MainMenu extends javax.swing.JFrame{
     private javax.swing.JButton buttonQuick;
     private javax.swing.JButton buttonSett;
     private gingermathgame.GradientPanel gradientPanel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -469,7 +465,6 @@ public class MainMenu extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JLabel labelName;
-    private javax.swing.JButton profileInfo;
     private javax.swing.JLabel welcomeText;
     // End of variables declaration//GEN-END:variables
 
