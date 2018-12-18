@@ -8,6 +8,13 @@ package gingermathgame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +27,9 @@ public class GamePlayScreen extends javax.swing.JFrame {
     private Prepare pre;
     private boolean multiChk;
     private Room room;
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
             
     public GamePlayScreen() {
 //       initComponents();
@@ -836,7 +846,14 @@ public class GamePlayScreen extends javax.swing.JFrame {
 //        room.setIsPlay(true);
         SoundControl.playSound("click.wav");
         MainMenu mm = new MainMenu();
-        mm.setSocket(game.getSocket(), game.getIn(), game.getOut());
+        try {
+            socket = new Socket("104.248.154.68", 8910);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mm.setSocket(socket, in, out);
         mm.setSize(getSize());
         mm.loadPlayerInformation();
         mm.setLocationRelativeTo(this);
