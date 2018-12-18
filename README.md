@@ -66,7 +66,7 @@
 <br>
 
 # <img src="img/advance.png" width="30"> For Advance User
-&nbsp;&nbsp;&nbsp;&nbsp; สำหรับผู้ใช้ที่ที่ต้องการจะเปิดเซิฟเวอร์เกมบนเซิฟเวอร์ของตัวเองให้ทำการรันไฟล์ [GingerMath_Server.jar](https://github.com/oop-it-kmitl-61/GingerMath/tree/master/server) ตามด้วย IP Address ของคุณ
+&nbsp;&nbsp;&nbsp;&nbsp; สำหรับผู้ใช้ที่ที่ต้องการจะเปิดเซิฟเวอร์เกมบนเซิฟเวอร์ของตัวเองให้ทำการรันไฟล์ [GingerMath_Server.jar](https://github.com/oop-it-kmitl-61/GingerMath/blob/master/server/GingerMath_Server.jar) ตามด้วย IP Address ของคุณ
 
 ```
 java -jar GingerMath_Server.jar xx.xx.xx.xx
