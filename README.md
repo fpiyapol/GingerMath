@@ -29,7 +29,7 @@
 
   <br>
 
-  <p align=center><img src="img/welcome.png" width="450"></p>
+  <p align=center><img src="img/welcome.png" width="500"></p>
 
   <br>
 
@@ -42,16 +42,16 @@
   
   <br>
 
-    <p align=center><img src="img/main_sc.png" width="450"></p>
+    <p align=center><img src="img/main_sc.png" width="500"></p>
 
     - **Quick Play** เป็นโหมดเล่นคนเดียวแบบแข่งกับตัวเอง โดยผู้เล่นจะต้องพยายามตอบคำถามให้ได้มากที่สุดภายในเวลา 60 วินาที โดยที่คำถามนั้นจะเพิ่มจำนวนหลักและความยากขึ้นเรื่อยๆตามจำนวนข้อที่เราตอบถูก โดยเมื่อตอบถูกก็จะได้ 1 คะแนน ซึ่งตัวเลขในการเล่นแต่ละรอบนั้นจะไม่ซ้ำกัน จะมีการ Random เลขขึ้นมาใหม่ทุกครั้ง
     
-    <p align=center><img src="img/play_sc.png" width="450"></p>
+    <p align=center><img src="img/play_sc.png" width="500"></p>
 
     - **Multiplayer** เป็นโหมดการแข่งขันกับผู้เล่นคนอื่นๆ เราสามารถเล่นกับผู้เล่นคนอื่นๆได้สูงสุดถึง 4 คน โดยมีเวลาให้ 60 วินาทีเช่นเดียวกันกับโหมด Quick Play โดยที่โจทย์ของทุกๆคนจะได้รับโจทย์เหมือนกัน และเมื่อแข่งจบก็จะมีการสรุปคะแนนว่าใครเป็นผู้ชนะในการแข่งครั้งนั้นๆ
     - **Setting** เราสามารถเข้าไปตั้งค่า การเปิด/ปิดเสียงของเกม และ ขนาดของตัวโปรแกรม ( Window sizes )
     
-    <p align=center><img src="img/sett_sc.png" width="450"></p>
+    <p align=center><img src="img/sett_sc.png" width="500"></p>
 
     - **Exit** เอาไว้ใช้ในการออกจากแอพพลิเคชั่นเกม
 
@@ -75,11 +75,12 @@ java -jar GingerMath_Server.jar xx.xx.xx.xx
 ``` * โดยทางระบบจะทำงานอยู่ที่ port 8910 * ```
 
 เมื่อรันแล้วจะได้
-<img src="img/server.png">
 
-และสามารถดูสถานะของเซิร์ฟเวอร์ได้โดยพิมพ์คำสั่งที่ถูกกำหนดไว้ (พิมพ์ !help เพื่อดูคู่มือ)
+<p align=center><img src="img/server.png" width="500"></p>
 
-<img src="img/server_help.png">
+และสามารถดูสถานะของเซิร์ฟเวอร์ได้โดยพิมพ์คำสั่งที่ถูกกำหนดไว้ ( พิมพ์ !help เพื่อดูคู่มือ )
+
+<p align=center><img src="img/server_help.png" width="500"></p>
 
 ``` !ex จะเป็นการออกจากโปรแกรมโดยมีการบันทึกข้อมูล(ชื่อผู้เล่น) ไว้ ```
 
