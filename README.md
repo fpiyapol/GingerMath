@@ -4,12 +4,19 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; Ginger Math เป็นแอพพลิเคชั่นเกมที่จะเปลี่ยนมุมมองในการคิดเลขเดิมๆ สู่มิติใหม่แห่งการคิดเลขที่สนุกยิ่งกว่า!
 
+<br>
+
 # <img src="img/online_world.png" width="30"> Welcome to New World.
 
 &nbsp;&nbsp;&nbsp;&nbsp; เบื่อไหมกับการนั่งคิดเลขคนเดียวอย่างเหงาๆ ( อยู่อย่างคนเหงาๆ อยู่กับความเดียวดาย ~ ) Ginger Math จะพาคุณเข้าสู่โลกออนไลน์ ให้คุณได้สร้างเกมการแข่งขันกับผู้เล่นคนอื่นๆ
 
+<br>
+
 # <img src="img/pc.png" width="30">  System Requirment
 * Java 10 or greater
+
+<br>
+
 # <img src="img/play.png" width="30"> How to play
 
 - Installation - ขั้นตอนการติดตั้ง
@@ -21,7 +28,7 @@
 
   <br>
 
-  <img src="img/welcome.png">
+  <p align=center><img src="img/welcome.png" width="400"></p>
 
   <br>
 
@@ -34,7 +41,7 @@
   <p align=center><img src="img/mainmenu.png" width="300"></p>
     - Quick Play เป็นโหมดเล่นคนเดียวแบบแข่งกับตัวเอง โดยผู้เล่นจะต้องพยายามตอบคำถามให้ได้มากที่สุดภายในเวลา 60 วินาที โดยที่คำถามนั้นจะเพิ่มจำนวนหลักและความยากขึ้นเรื่อยๆตามจำนวนข้อที่เราตอบถูก โดยเมื่อตอบถูกก็จะได้ 1 คะแนน ซึ่งตัวเลขในการเล่นแต่ละรอบนั้นจะไม่ซ้ำกัน จะมีการ Random เลขขึ้นมาใหม่ทุกครั้ง
     - Multiplayer เป็นโหมดการแข่งขันกับผู้เล่นคนอื่นๆ เราสามารถเล่นกับผู้เล่นคนอื่นๆได้สูงสุดถึง 4 คน โดยมีเวลาให้ 60 วินาทีเช่นเดียวกันกับโหมด Quick Play โดยที่โจทย์ของทุกๆคนจะได้รับโจทย์เหมือนกัน และเมื่อแข่งจบก็จะมีการสรุปคะแนนว่าใครเป็นผู้ชนะในการแข่งครั้งนั้นๆ
-    - Setting เราสามารถเข้าไปตั้งค่า การเปิด/ปิดเสียงของเกม และ ขนาดของตัวโปรแกรม (Window sizes)
+    - Setting เราสามารถเข้าไปตั้งค่า การเปิด/ปิดเสียงของเกม และ ขนาดของตัวโปรแกรม ( Window sizes )
     - Exit เอาไว้ใช้ในการออกจากแอพพลิเคชั่นเกม
 
 * Go Online
@@ -42,6 +49,8 @@
     * จะเข้าสู่หน้า lobby ที่จะแสดงรายชื่อห้องที่พร้อมเข้าเล่น
     * กดเลือกห้องที่ต้องการ จากนนั้นกดปุ่ม JOIN ROOM หรือกด CREATE ROOM เพื่อสร้างห้อง
     * จะเข้าสู่ห้องเล่นเกม, ทำการรอผู้เล่นอื่นจนกระทั่งคนที่เป็นเจ้าของห้อง(หัวห้อง(คนที่สร้างห้อง)) กด START
+
+<br>
 
 # <img src="img/advance.png" width="30"> For Advance User
 &nbsp;&nbsp;&nbsp;&nbsp; สำหรับผู้ใช้ที่ที่ต้องการจะเปิดเซิฟเวอร์เกมบนเซิฟเวอร์ของตัวเองให้ทำการรันไฟล์ GingerMath_Server.jar ตามด้วย IP Address ของคุณ
@@ -59,7 +68,7 @@ java -jar GingerMath_Server.jar xx.xx.xx.xx
 และสามารถดูสถานะของเซิร์ฟเวอร์ได้โดยพิมพ์คำสั่งที่ถูกกำหนดไว้ (พิมพ์ !help เพื่อดูคู่มือ)
 <img src="img/server_help.png">
 
-
+<br>
 
 # <img src="img/team.png" width="30"> Team Member
 
@@ -69,11 +78,16 @@ java -jar GingerMath_Server.jar xx.xx.xx.xx
 |                          60070008                           |                           60070052                            |                         60070120                          |
 |          [@KimKosit](https://github.com/KimKosit)           |           [@fpiyapol](https://github.com/fpiyapol)            |       [@158Alfetta](https://github.com/158Alfetta)        |
 
+<br>
+
 # <img src="img/bulb.png" width="30">  Instructor
 
 |<img src="img/Teacher_Thanisa.png"  width="100">|
 |:-:|
 | **ผศ.ดร. ธนิศา นุ่มนนท์** |
+
+<br>
+
 ---
 
 <img src="img/it_kmitl_logo.png"  width="100">
