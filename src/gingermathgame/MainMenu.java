@@ -42,6 +42,8 @@ public class MainMenu extends javax.swing.JFrame{
         setting = new SettingInformation();
         setting.loadSetting();
         
+        //#profileInfo
+        
     }
     
     public void setSocket(Socket socket, BufferedReader in, PrintWriter out){
@@ -55,6 +57,7 @@ public class MainMenu extends javax.swing.JFrame{
         playerInfo = new PlayerInformation();
         if(playerInfo.loadInformation()){
             out.println("oldname " + playerInfo.getName());
+            profileInfo.setText(playerInfo.getName());
         }else{
             while(true){
                 try {
@@ -64,6 +67,7 @@ public class MainMenu extends javax.swing.JFrame{
                     if(feedback.equals("acc")){
                         playerInfo.setName(createPlayerName);
                         playerInfo.saveInfo();
+                        profileInfo.setText(playerInfo.getName());
                         JOptionPane.showMessageDialog(null, "Done");
                         break;
                     }else if(feedback.equals("dup")){
@@ -102,6 +106,8 @@ public class MainMenu extends javax.swing.JFrame{
         jPanel4 = new javax.swing.JPanel();
         gradientPanel1 = new gingermathgame.GradientPanel();
         jPanel1 = new javax.swing.JPanel();
+        welcomeText = new javax.swing.JLabel();
+        profileInfo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         labelName = new javax.swing.JLabel();
         buttonPanel = new javax.swing.JPanel();
@@ -131,22 +137,47 @@ public class MainMenu extends javax.swing.JFrame{
             }
         });
 
+        welcomeText.setFont(new java.awt.Font("Kanit", 2, 24)); // NOI18N
+        welcomeText.setForeground(new java.awt.Color(255, 255, 255));
+        welcomeText.setText("Welcome");
+
+        profileInfo.setBackground(new java.awt.Color(138, 192, 84));
+        profileInfo.setFont(new java.awt.Font("Kanit", 0, 18)); // NOI18N
+        profileInfo.setForeground(new java.awt.Color(255, 255, 255));
+        profileInfo.setContentAreaFilled(false);
+        profileInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        profileInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileInfoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 153, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(welcomeText, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(profileInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(profileInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 154, Short.MAX_VALUE)
+            .addGap(0, 151, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,13 +253,13 @@ public class MainMenu extends javax.swing.JFrame{
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addComponent(buttonQuick, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(buttonQuick, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonMultiplayer, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(buttonMultiplayer, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonSett, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(buttonSett, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonExit, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addComponent(buttonExit, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -262,7 +293,7 @@ public class MainMenu extends javax.swing.JFrame{
                 .addGroup(gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(gradientPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(labelName, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
+                        .addComponent(labelName, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE))
                     .addGroup(gradientPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -279,7 +310,7 @@ public class MainMenu extends javax.swing.JFrame{
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(gradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelName, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                .addComponent(labelName, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addGap(35, 35, 35)
                 .addGroup(gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -303,7 +334,7 @@ public class MainMenu extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        SoundControl.playSound("click.wav");
+
         double component = getWidth()*getHeight();
         double current = 854*480;
     
@@ -312,6 +343,9 @@ public class MainMenu extends javax.swing.JFrame{
         buttonMultiplayer.setFont(new Font(buttonMultiplayer.getFont().getName(), buttonMultiplayer.getFont().getStyle(), (int)(16*(component/current))));
         buttonExit.setFont(new Font(buttonExit.getFont().getName(), buttonExit.getFont().getStyle(), (int)(16*(component/current))));
         labelName.setFont(new Font(labelName.getFont().getName(), labelName.getFont().getStyle(), (int)(64*(component/current))));
+//        welcomeText.setFont(new Font(welcomeText.getFont().getName(), welcomeText.getFont().getStyle(), (int)(24*(component/current))));
+//        profileInfo.setFont(new Font(welcomeText.getFont().getName(), welcomeText.getFont().getStyle(), (int)(18*(component/current))));
+        
     }//GEN-LAST:event_formComponentResized
 
     private void buttonSettActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSettActionPerformed
@@ -337,6 +371,7 @@ public class MainMenu extends javax.swing.JFrame{
     private void buttonQuickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonQuickActionPerformed
         SoundControl.playSound("click.wav");
         GameImplement game = new GameImplement();
+        game.setPlayerInfo(playerInfo);
         GamePlayScreen gameGUI = new GamePlayScreen(game);
         setAlwaysOnTop(true);
         gameGUI.setSize(getSize());
@@ -357,6 +392,28 @@ public class MainMenu extends javax.swing.JFrame{
         lobby.setVisible(true);
         dispose();
     }//GEN-LAST:event_buttonMultiplayerActionPerformed
+
+    private void profileInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileInfoActionPerformed
+        Profile pf = new Profile(playerInfo, this);
+        int score = playerInfo.getScore();
+        out.println("upr "+ playerInfo.getName() + "-" + score);
+        out.println("rqr -");
+        try {
+            String[] s = in.readLine().split(" ");
+            int rank = Integer.parseInt(s[1])+1;
+            pf.setRanking(rank);
+            pf.setSize(getSize());
+            pf.setLocationRelativeTo(this);
+            pf.setAlwaysOnTop(true);
+            pf.setVisible(true);
+            setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }//GEN-LAST:event_profileInfoActionPerformed
        
     
     /**
@@ -412,6 +469,8 @@ public class MainMenu extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JLabel labelName;
+    private javax.swing.JButton profileInfo;
+    private javax.swing.JLabel welcomeText;
     // End of variables declaration//GEN-END:variables
 
    

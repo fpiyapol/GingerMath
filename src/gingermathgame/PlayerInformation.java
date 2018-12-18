@@ -28,6 +28,7 @@ public class PlayerInformation {
     private File file;
     private BufferedReader reader;
     private PrintWriter writer;
+    private int oldScore;
     
     public boolean loadInformation(){
         file = new File("info.txt");
@@ -38,6 +39,7 @@ public class PlayerInformation {
                 String[] inf = data.split(" ");
                 name = inf[0];
                 score = Integer.parseInt(inf[1]);
+                oldScore = score;
                 System.out.println("loaded");
                 return true;
             } catch (FileNotFoundException ex) {
@@ -73,9 +75,15 @@ public class PlayerInformation {
         file = new File("info.txt");
         try {
             writer = new PrintWriter(file);
-            writer.println(name+" "+score);
-            writer.flush();
-            System.out.println("OK WITH " + name);
+            if(score>oldScore){
+                writer.println(name+" "+score);
+                writer.flush();
+            }else{
+                writer.println(name+" "+oldScore);
+                writer.flush();
+            }
+            
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PlayerInformation.class.getName()).log(Level.SEVERE, null, ex);
         }

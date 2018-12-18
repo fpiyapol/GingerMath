@@ -32,6 +32,9 @@ public class GameImplement{
     private JTextArea scoreLabel;
     private String name;
     
+    private PlayerInformation playerInfo; 
+    private int playerScore;
+    
     public GameImplement() {
         timer = new Timer();
     }
@@ -39,6 +42,11 @@ public class GameImplement{
     public GameImplement(ArrayList<Integer> num1, ArrayList<Integer> num2) {
         this.num1 = num1;
         this.num2 = num2;
+    }
+    
+    public void setPlayerInfo(PlayerInformation playerInfo){
+        this.playerInfo = playerInfo;
+        timer.setPlayerInfo(playerInfo);
     }
     
     public int getScore() {
@@ -108,6 +116,7 @@ public class GameImplement{
         if(player4[0].length==2){
             if(player4[0][1].equals(name)){
                 msg += " > "+player4[0][1] + " : " +player4[1][1].replace("]", "") + " <\n";
+                playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
             }else{
                msg += " "+player4[0][1] + " : " + player4[1][1].replace("]", "") + "\n";
             }
@@ -116,6 +125,7 @@ public class GameImplement{
         if(player3[0].length==2){
             if(player3[0][1].equals(name)){
                 msg += " > "+player3[0][1] + " : " +player3[1][1].replace("]", "") + " <\n";
+                playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
             }else{
                msg += " "+player3[0][1] + " : " + player3[1][1].replace("]", "") + "\n";
             }
@@ -124,6 +134,7 @@ public class GameImplement{
         if(player2[0].length==2){
            if(player2[0][1].equals(name)){
                msg += " > "+player2[0][1] + " : " +player2[1][1].replace("]", "") + " <\n";
+               playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
             }else{
                msg += " "+player2[0][1] + " : " + player2[1][1].replace("]", "") + "\n";
             }
@@ -132,6 +143,7 @@ public class GameImplement{
         if(player1[0].length==2){
             if(player1[0][1].equals(name)){
                 msg += " > "+player1[0][1] + " : " +player1[1][1].replace("]", "") + " <\n";
+                playerScore = Integer.parseInt(player4[1][1].replace("]", ""));
             }else{
                msg += " "+player1[0][1] + " : " + player1[1][1].replace("]", "") + "\n";
             }
@@ -236,6 +248,17 @@ public class GameImplement{
                             String[] info = data.split(", ");
                             String[] ldb = info[0].split(" ");
                             showLeaderboard(ldb[0], ldb[1], ldb[2], ldb[3]);
+                            if(timer.getTime()==0){
+                                
+                                playerInfo.loadInformation();
+                                playerInfo.setScore(score);
+                                playerInfo.saveInfo();
+                                
+                                System.out.println("Gettime "+ timer.getTime());
+                                System.out.println("BREAK COMPLETE----------------");
+                                out.println("bk -");
+                                break;
+                            }
                         }
                         
                     } catch (IOException ex) {

@@ -299,6 +299,7 @@ public class Lobby extends javax.swing.JFrame {
         SoundControl.playSound("click.wav");
         MainMenu mm = new MainMenu();
         mm.setSocket(socket, in, out);
+        mm.loadPlayerInformation();
         mm.setSize(getSize());
         mm.setLocationRelativeTo(this);
         mm.setVisible(true);

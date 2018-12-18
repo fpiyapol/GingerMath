@@ -279,6 +279,7 @@ public class Room extends javax.swing.JFrame {
 
     private void btBackToLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackToLobbyActionPerformed
         SoundControl.playSound("click.wav");
+        updateRoomFlag = false;
         out.println("bk -");
         Lobby lobby = new Lobby();
         lobby.setSocket(socket, in, out);

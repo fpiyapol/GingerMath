@@ -28,6 +28,8 @@ public class Timer implements Runnable{
     private JDialog timeoutMulti;
     private boolean multiChk;
     
+    private int time = 60;
+    
     private JLabel player1Label;
     private JLabel player2Label;
     private JLabel player3Label;
@@ -35,8 +37,10 @@ public class Timer implements Runnable{
     
     private String[][] msg2;
     private String name;
+    private PlayerInformation pi;
     
     protected int score;
+    
     
     public void setTimerLabel(JLabel timeLabel){
         this.timeLabel = timeLabel;
@@ -44,6 +48,10 @@ public class Timer implements Runnable{
     
     public void setPrentFrame(JFrame parentFrame){
         this.parentFrame = parentFrame;
+    }
+    
+    public int getTime(){
+        return time;
     }
     
     public void setScore(int score){
@@ -119,6 +127,10 @@ public class Timer implements Runnable{
         this.multiChk = multiChk;
     }
     
+    public void setPlayerInfo(PlayerInformation playerInfo){
+        this.pi = playerInfo;
+    }
+    
     
     public void setStatus(boolean pauseFlag, boolean playerExitFlag){
         this.pauseFlag = pauseFlag;
@@ -134,6 +146,8 @@ public class Timer implements Runnable{
             try {
                 timeLabel.setText(t + "   ");
                 Thread.sleep(1000);
+                time = t;
+                
                 if (t == 10){
                     SoundControl.playSound("countdown.wav");
                 }
@@ -156,6 +170,11 @@ public class Timer implements Runnable{
             SoundControl.playSound("radar.wav");
             answerField.setEditable(false);
             showScoreLabel.setText(" Your Score  "+score);
+            
+            pi.loadInformation();
+            pi.setScore(score);
+            pi.saveInfo();
+            
             timeoutDialog.setSize(parentFrame.getSize());
             timeoutDialog.setLocationRelativeTo(parentFrame);
             timeoutDialog.setVisible(true);

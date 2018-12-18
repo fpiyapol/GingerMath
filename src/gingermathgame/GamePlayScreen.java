@@ -100,7 +100,6 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todscoreShowLabel = new javax.swing.JLabel();
         todmsgLabel = new javax.swing.JLabel();
         todbackBt = new javax.swing.JButton();
-        todscoreBoardBt = new javax.swing.JButton();
         pauseDialog = new javax.swing.JDialog();
         pdPanelLeft = new javax.swing.JPanel();
         pdPanelRight = new javax.swing.JPanel();
@@ -145,7 +144,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todPanelLeft.setLayout(todPanelLeftLayout);
         todPanelLeftLayout.setHorizontalGroup(
             todPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 169, Short.MAX_VALUE)
+            .addGap(0, 159, Short.MAX_VALUE)
         );
         todPanelLeftLayout.setVerticalGroup(
             todPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +155,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todPanelRight.setLayout(todPanelRightLayout);
         todPanelRightLayout.setHorizontalGroup(
             todPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 171, Short.MAX_VALUE)
+            .addGap(0, 161, Short.MAX_VALUE)
         );
         todPanelRightLayout.setVerticalGroup(
             todPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +181,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         );
         todPanelBottomLayout.setVerticalGroup(
             todPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 56, Short.MAX_VALUE)
+            .addGap(0, 57, Short.MAX_VALUE)
         );
 
         todtimeoutLabel.setFont(new java.awt.Font("Sweet Sensations Personal Use", 1, 48)); // NOI18N
@@ -201,7 +200,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         todmsgLabel.setText("Congratulation");
 
         todbackBt.setBackground(new java.awt.Color(159, 99, 165));
-        todbackBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
+        todbackBt.setFont(new java.awt.Font("Kanit", 2, 18)); // NOI18N
         todbackBt.setForeground(new java.awt.Color(255, 255, 255));
         todbackBt.setText(" Back to Main Menu ");
         todbackBt.addActionListener(new java.awt.event.ActionListener() {
@@ -210,29 +209,24 @@ public class GamePlayScreen extends javax.swing.JFrame {
             }
         });
 
-        todscoreBoardBt.setBackground(new java.awt.Color(75, 137, 218));
-        todscoreBoardBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
-        todscoreBoardBt.setForeground(new java.awt.Color(255, 255, 255));
-        todscoreBoardBt.setText(" Scoreboard ");
-
         javax.swing.GroupLayout todPanelCenterLayout = new javax.swing.GroupLayout(todPanelCenter);
         todPanelCenter.setLayout(todPanelCenterLayout);
         todPanelCenterLayout.setHorizontalGroup(
             todPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(todPanelCenterLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(todscoreShowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(todscoreShowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addGap(50, 50, 50))
             .addGroup(todPanelCenterLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(todPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(todPanelCenterLayout.createSequentialGroup()
-                        .addComponent(todbackBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(34, 34, 34)
-                        .addComponent(todscoreBoardBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(todmsgLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(todtimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
+            .addGroup(todPanelCenterLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(todbackBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(49, 49, 49))
         );
         todPanelCenterLayout.setVerticalGroup(
             todPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,11 +235,9 @@ public class GamePlayScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(todscoreShowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(todmsgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addComponent(todmsgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(todPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(todbackBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(todscoreBoardBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(todbackBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(36, 36, 36))
         );
 
@@ -339,7 +331,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         );
 
         pdExitBt.setBackground(new java.awt.Color(255, 92, 51));
-        pdExitBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
+        pdExitBt.setFont(new java.awt.Font("Kanit", 2, 18)); // NOI18N
         pdExitBt.setForeground(new java.awt.Color(255, 255, 255));
         pdExitBt.setText(" I'm quit ");
         pdExitBt.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +341,7 @@ public class GamePlayScreen extends javax.swing.JFrame {
         });
 
         pdContinueBt.setBackground(new java.awt.Color(138, 192, 84));
-        pdContinueBt.setFont(new java.awt.Font("Sweet Pea", 1, 18)); // NOI18N
+        pdContinueBt.setFont(new java.awt.Font("Kanit", 2, 18)); // NOI18N
         pdContinueBt.setForeground(new java.awt.Color(255, 255, 255));
         pdContinueBt.setText(" Continue Game ");
         pdContinueBt.addActionListener(new java.awt.event.ActionListener() {
@@ -517,9 +509,9 @@ public class GamePlayScreen extends javax.swing.JFrame {
         tomPlayer4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         tomBackRoomBt.setBackground(new java.awt.Color(204, 0, 255));
-        tomBackRoomBt.setFont(new java.awt.Font("Sweet Pea", 1, 24)); // NOI18N
+        tomBackRoomBt.setFont(new java.awt.Font("Kanit", 2, 24)); // NOI18N
         tomBackRoomBt.setForeground(new java.awt.Color(255, 255, 255));
-        tomBackRoomBt.setText(" Back to Your Room ");
+        tomBackRoomBt.setText(" Back to Main Menu ");
         tomBackRoomBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tomBackRoomBtActionPerformed(evt);
@@ -530,20 +522,15 @@ public class GamePlayScreen extends javax.swing.JFrame {
         tomPanelCenter.setLayout(tomPanelCenterLayout);
         tomPanelCenterLayout.setHorizontalGroup(
             tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tomPanelCenterLayout.createSequentialGroup()
-                .addGroup(tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tomPanelCenterLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tomPlayer4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tomPlayer3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tomPlayer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tomPlayer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tomTimeoutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(tomPanelCenterLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(tomBackRoomBt, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                        .addGap(55, 55, 55)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tomPanelCenterLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(tomPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tomBackRoomBt, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(tomPlayer4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tomPlayer3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tomPlayer2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tomPlayer1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tomTimeoutLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
         tomPanelCenterLayout.setVerticalGroup(
@@ -775,7 +762,6 @@ public class GamePlayScreen extends javax.swing.JFrame {
         double current = 854*480;
         double size = Math.log(component / current) + 1;
         
-        todscoreBoardBt.setFont(new Font(todscoreBoardBt.getFont().getName(), todscoreBoardBt.getFont().getStyle(), (int)(14*(size))));
         todtimeoutLabel.setFont(new Font(todtimeoutLabel.getFont().getName(), todtimeoutLabel.getFont().getStyle(), (int)(52*(size))));
         todscoreShowLabel.setFont(new Font(todscoreShowLabel.getFont().getName(), todscoreShowLabel.getFont().getStyle(), (int)(36*(size))));
         todmsgLabel.setFont(new Font(todmsgLabel.getFont().getName(), todmsgLabel.getFont().getStyle(), (int)(24*(size))));
@@ -848,8 +834,10 @@ public class GamePlayScreen extends javax.swing.JFrame {
         MainMenu mm = new MainMenu();
         mm.setSocket(game.getSocket(), game.getIn(), game.getOut());
         mm.setSize(getSize());
+        mm.loadPlayerInformation();
         mm.setLocationRelativeTo(this);
         mm.setVisible(true);
+        timeoutMulti.dispose();
         dispose();
     }//GEN-LAST:event_tomBackRoomBtActionPerformed
     
@@ -927,7 +915,6 @@ public class GamePlayScreen extends javax.swing.JFrame {
     private javax.swing.JPanel todPanelTop;
     private javax.swing.JButton todbackBt;
     private javax.swing.JLabel todmsgLabel;
-    private javax.swing.JButton todscoreBoardBt;
     private javax.swing.JLabel todscoreShowLabel;
     private javax.swing.JLabel todtimeoutLabel;
     private javax.swing.JButton tomBackRoomBt;
